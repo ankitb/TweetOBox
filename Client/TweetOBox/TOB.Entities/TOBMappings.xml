@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="TweetOBoxDb" xmlns="http://schemas.microsoft.com/linqtosql/mapping/2007">
+  <Table Name="Account" Member="Accounts">
+    <Type Name="TOB.Entities.Account">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" UpdateCheck="Never" AutoSync="OnInsert" />
+      <Column Name="Username" Member="Username" Storage="_Username" DbType="NVarChar(31) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Password" Member="Password" Storage="_Password" DbType="NVarChar(31)" UpdateCheck="Never" />
+      <Column Name="AccountType" Member="AccountType" Storage="_AccountType" DbType="Int NOT NULL" UpdateCheck="Never" />
+      <Column Name="Version" Member="Version" Storage="_Version" DbType="rowversion" IsDbGenerated="true" IsVersion="true" UpdateCheck="Never" AutoSync="Always" />
+      <Column Name="CreationDate" Member="CreationDate" Storage="_CreationDate" DbType="DateTime" UpdateCheck="Never" />
+      <Column Name="IsOAuth" Member="IsOAuth" Storage="_IsOAuth" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="AccessToken" Member="AccessToken" Storage="_AccessToken" DbType="NVarChar(1024)" UpdateCheck="Never" />
+      <Column Name="AccessTokenSecret" Member="AccessTokenSecret" Storage="_AccessTokenSecret" DbType="NVarChar(1024)" UpdateCheck="Never" />
+      <Association Name="Account_AccountType" Member="AccountTypeAccountType" Storage="_AccountTypeAccountType" ThisKey="AccountType" OtherKey="Id" IsForeignKey="true" />
+      <Association Name="DM_AccountId" Member="DirectMessages" Storage="_DirectMessages" ThisKey="Id" OtherKey="AccountId" DeleteRule="CASCADE" />
+      <Association Name="Filter_AccountId" Member="AccountFilterMappings" Storage="_AccountFilterMappings" ThisKey="Id" OtherKey="AccountId" DeleteRule="NO ACTION" />
+      <Association Name="Status_AccountId" Member="Status" Storage="_Status" ThisKey="Id" OtherKey="AccountId" DeleteRule="CASCADE" />
+      <Association Name="TwitterUserProfile_Account" Member="UserProfiles" Storage="_UserProfiles" ThisKey="Id" OtherKey="AccountId" DeleteRule="NO ACTION" />
+    </Type>
+  </Table>
+  <Table Name="AccountFilterMapping" Member="AccountFilterMappings">
+    <Type Name="TOB.Entities.AccountFilterMapping">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="FilterId" Member="FilterId" Storage="_FilterId" DbType="Int" />
+      <Column Name="AccountId" Member="AccountId" Storage="_AccountId" DbType="Int" />
+      <Association Name="Filter_AccountId" Member="Account" Storage="_Account" ThisKey="AccountId" OtherKey="Id" IsForeignKey="true" />
+      <Association Name="Filter_FilterId" Member="SavedFilter" Storage="_SavedFilter" ThisKey="FilterId" OtherKey="Id" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="AccountType" Member="AccountTypes">
+    <Type Name="TOB.Entities.AccountType">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="Name" Member="Name" Storage="_Name" DbType="NVarChar(127) NOT NULL" CanBeNull="false" />
+      <Association Name="Account_AccountType" Member="Accounts" Storage="_Accounts" ThisKey="Id" OtherKey="AccountType" DeleteRule="NO ACTION" />
+    </Type>
+  </Table>
+  <Table Name="DirectMessage" Member="DirectMessages">
+    <Type Name="TOB.Entities.DirectMessage">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="TwitterId" Member="TwitterId" Storage="_TwitterId" DbType="BigInt" />
+      <Column Name="SenderId" Member="SenderId" Storage="_SenderId" DbType="BigInt" />
+      <Column Name="Text" Member="Text" Storage="_Text" DbType="NVarChar(255)" />
+      <Column Name="TwitterCreatedDate" Member="TwitterCreatedDate" Storage="_TwitterCreatedDate" DbType="DateTime" />
+      <Column Name="CreationTime" Member="CreationTime" Storage="_CreationTime" DbType="DateTime" />
+      <Column Name="UserProfileId" Member="UserProfileId" Storage="_UserProfileId" DbType="Int" />
+      <Column Name="AccountId" Member="AccountId" Storage="_AccountId" DbType="Int" />
+      <Column Name="Recieved" Member="Recieved" Storage="_Recieved" DbType="Bit" />
+      <Column Name="UserScreenName" Member="UserScreenName" Storage="_UserScreenName" DbType="NVarChar(31)" />
+      <Column Name="IsRead" Member="IsRead" Storage="_IsRead" DbType="Bit" />
+      <Association Name="DM_AccountId" Member="Account" Storage="_Account" ThisKey="AccountId" OtherKey="Id" IsForeignKey="true" />
+      <Association Name="DM_UserProfileId" Member="UserProfile" Storage="_UserProfile" ThisKey="UserProfileId" OtherKey="Id" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="PanelType" Member="PanelTypes">
+    <Type Name="TOB.Entities.PanelType">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL" IsPrimaryKey="true" />
+      <Column Name="Name" Member="Name" Storage="_Name" DbType="NVarChar(31)" />
+      <Association Name="Filter_PanelTypeId" Member="SavedFilters" Storage="_SavedFilters" ThisKey="Id" OtherKey="PanelTypeId" DeleteRule="NO ACTION" />
+    </Type>
+  </Table>
+  <Table Name="SavedFilter" Member="SavedFilters">
+    <Type Name="TOB.Entities.SavedFilter">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="FilterText" Member="FilterText" Storage="_FilterText" DbType="NVarChar(31)" />
+      <Column Name="PanelTypeId" Member="PanelTypeId" Storage="_PanelTypeId" DbType="Int" />
+      <Association Name="Filter_FilterId" Member="AccountFilterMappings" Storage="_AccountFilterMappings" ThisKey="Id" OtherKey="FilterId" DeleteRule="NO ACTION" />
+      <Association Name="Filter_PanelTypeId" Member="PanelType" Storage="_PanelType" ThisKey="PanelTypeId" OtherKey="Id" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="SavedPluginView" Member="SavedPluginViews">
+    <Type Name="TOB.Entities.SavedPluginView">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="PluginId" Member="PluginId" Storage="_PluginId" DbType="UniqueIdentifier" />
+      <Column Name="PluginName" Member="PluginName" Storage="_PluginName" DbType="NVarChar(127)" />
+      <Column Name="PluginStream" Member="PluginStream" Storage="_PluginStream" DbType="NVarChar(127)" />
+      <Column Name="PluginStreamType" Member="PluginStreamType" Storage="_PluginStreamType" DbType="Int" />
+    </Type>
+  </Table>
+  <Table Name="SavedSearch" Member="SavedSearches">
+    <Type Name="TOB.Entities.SavedSearch">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" UpdateCheck="Never" AutoSync="OnInsert" />
+      <Column Name="SearchText" Member="SearchText" Storage="_SearchText" DbType="NVarChar(127)" UpdateCheck="Never" />
+      <Column Name="SQLQuery" Member="SQLQuery" Storage="_SQLQuery" DbType="NVarChar(1024)" UpdateCheck="Never" />
+      <Column Name="Name" Member="Name" Storage="_Name" DbType="NVarChar(31)" UpdateCheck="Never" />
+      <Column Name="Version" Member="Version" Storage="_Version" DbType="rowversion" IsDbGenerated="true" IsVersion="true" UpdateCheck="Never" AutoSync="Always" />
+    </Type>
+  </Table>
+  <Table Name="Status" Member="Status">
+    <Type Name="TOB.Entities.Status">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" UpdateCheck="Never" AutoSync="OnInsert" />
+      <Column Name="TwitterStatusId" Member="TwitterStatusId" Storage="_TwitterStatusId" DbType="BigInt" UpdateCheck="Never" />
+      <Column Name="InReplyToStatusId" Member="InReplyToStatusId" Storage="_InReplyToStatusId" DbType="BigInt" UpdateCheck="Never" />
+      <Column Name="InReplyToUserId" Member="InReplyToUserId" Storage="_InReplyToUserId" DbType="Int" UpdateCheck="Never" />
+      <Column Name="IsFavorited" Member="IsFavorited" Storage="_IsFavorited" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="IsTruncated" Member="IsTruncated" Storage="_IsTruncated" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="Source" Member="Source" Storage="_Source" DbType="NVarChar(511)" UpdateCheck="Never" />
+      <Column Name="Text" Member="Text" Storage="_Text" DbType="NVarChar(150)" UpdateCheck="Never" />
+      <Column Name="TwitterUserId" Member="TwitterUserId" Storage="_TwitterUserId" DbType="Int" UpdateCheck="Never" />
+      <Column Name="CreationDate" Member="CreationDate" Storage="_CreationDate" DbType="DateTime" UpdateCheck="Never" />
+      <Column Name="UserProfileId" Member="UserProfileId" Storage="_UserProfileId" DbType="Int" UpdateCheck="Never" />
+      <Column Name="TwitterCreatedDate" Member="TwitterCreatedDate" Storage="_TwitterCreatedDate" DbType="DateTime" UpdateCheck="Never" />
+      <Column Name="Version" Member="Version" Storage="_Version" DbType="rowversion" IsDbGenerated="true" IsVersion="true" UpdateCheck="Never" AutoSync="Always" />
+      <Column Name="AccountId" Member="AccountId" Storage="_AccountId" DbType="Int" UpdateCheck="Never" />
+      <Column Name="Latitude" Member="Latitude" Storage="_Latitude" DbType="Float" UpdateCheck="Never" />
+      <Column Name="Longitude" Member="Longitude" Storage="_Longitude" DbType="Float" UpdateCheck="Never" />
+      <Column Name="IsRead" Member="IsRead" Storage="_IsRead" DbType="Bit" UpdateCheck="Never" />
+      <Association Name="Status_AccountId" Member="Account" Storage="_Account" ThisKey="AccountId" OtherKey="Id" IsForeignKey="true" />
+      <Association Name="Status_UserProfileId" Member="UserProfile" Storage="_UserProfile" ThisKey="UserProfileId" OtherKey="Id" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="TOBRegister" Member="TOBRegisters">
+    <Type Name="TOB.Entities.TOBRegister">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="RegisterId" Member="RegisterId" Storage="_RegisterId" DbType="UniqueIdentifier" />
+    </Type>
+  </Table>
+  <Table Name="UserProfile" Member="UserProfiles">
+    <Type Name="TOB.Entities.UserProfile">
+      <Column Name="Name" Member="Name" Storage="_Name" DbType="NVarChar(31)" UpdateCheck="Never" />
+      <Column Name="ScreenName" Member="ScreenName" Storage="_ScreenName" DbType="NVarChar(31)" UpdateCheck="Never" />
+      <Column Name="Description" Member="Description" Storage="_Description" DbType="NVarChar(255)" UpdateCheck="Never" />
+      <Column Name="ProfileImageUrl" Member="ProfileImageUrl" Storage="_ProfileImageUrl" DbType="NVarChar(511)" UpdateCheck="Never" />
+      <Column Name="UserUrl" Member="UserUrl" Storage="_UserUrl" DbType="NVarChar(511)" UpdateCheck="Never" />
+      <Column Name="IsProtected" Member="IsProtected" Storage="_IsProtected" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="FollowersCount" Member="FollowersCount" Storage="_FollowersCount" DbType="Int" UpdateCheck="Never" />
+      <Column Name="UserId" Member="UserId" Storage="_UserId" DbType="Int" UpdateCheck="Never" />
+      <Column Name="Location" Member="Location" Storage="_Location" DbType="NVarChar(255)" UpdateCheck="Never" />
+      <Column Name="TwitterCreatedDate" Member="TwitterCreatedDate" Storage="_TwitterCreatedDate" DbType="DateTime" UpdateCheck="Never" />
+      <Column Name="FavouritesCount" Member="FavouritesCount" Storage="_FavouritesCount" DbType="Int" UpdateCheck="Never" />
+      <Column Name="FriendsCount" Member="FriendsCount" Storage="_FriendsCount" DbType="Int" UpdateCheck="Never" />
+      <Column Name="HasNotifications" Member="HasNotifications" Storage="_HasNotifications" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="IsFollowing" Member="IsFollowing" Storage="_IsFollowing" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="IsVerified" Member="IsVerified" Storage="_IsVerified" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="IsProfileBackgroundTiled" Member="IsProfileBackgroundTiled" Storage="_IsProfileBackgroundTiled" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="ProfileBackgroundColor" Member="ProfileBackgroundColor" Storage="_ProfileBackgroundColor" DbType="NVarChar(7)" UpdateCheck="Never" />
+      <Column Name="ProfileBackgroundImageUrl" Member="ProfileBackgroundImageUrl" Storage="_ProfileBackgroundImageUrl" DbType="NVarChar(511)" UpdateCheck="Never" />
+      <Column Name="ProfileLinkColor" Member="ProfileLinkColor" Storage="_ProfileLinkColor" DbType="NVarChar(7)" UpdateCheck="Never" />
+      <Column Name="ProfileSidebarBorderColor" Member="ProfileSidebarBorderColor" Storage="_ProfileSidebarBorderColor" DbType="NVarChar(7)" UpdateCheck="Never" />
+      <Column Name="ProfileSidebarFillColor" Member="ProfileSidebarFillColor" Storage="_ProfileSidebarFillColor" DbType="NVarChar(7)" UpdateCheck="Never" />
+      <Column Name="ProfileTextColor" Member="ProfileTextColor" Storage="_ProfileTextColor" DbType="NVarChar(7)" UpdateCheck="Never" />
+      <Column Name="StatusesCount" Member="StatusesCount" Storage="_StatusesCount" DbType="Int" UpdateCheck="Never" />
+      <Column Name="TimeZone" Member="TimeZone" Storage="_TimeZone" DbType="NVarChar(63)" UpdateCheck="Never" />
+      <Column Name="UtcOffset" Member="UtcOffset" Storage="_UtcOffset" DbType="NVarChar(127)" UpdateCheck="Never" />
+      <Column Name="AccountId" Member="AccountId" Storage="_AccountId" DbType="Int" UpdateCheck="Never" />
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" UpdateCheck="Never" AutoSync="OnInsert" />
+      <Column Name="CreationDate" Member="CreationDate" Storage="_CreationDate" DbType="DateTime" UpdateCheck="Never" />
+      <Column Name="Version" Member="Version" Storage="_Version" DbType="rowversion" IsDbGenerated="true" IsVersion="true" UpdateCheck="Never" AutoSync="Always" />
+      <Column Name="IsFollower" Member="IsFollower" Storage="_IsFollower" DbType="Bit" UpdateCheck="Never" />
+      <Column Name="LastUpdated" Member="LastUpdated" Storage="_LastUpdated" DbType="DateTime" UpdateCheck="Never" />
+      <Association Name="DM_UserProfileId" Member="DirectMessages" Storage="_DirectMessages" ThisKey="Id" OtherKey="UserProfileId" DeleteRule="CASCADE" />
+      <Association Name="Status_UserProfileId" Member="Status" Storage="_Status" ThisKey="Id" OtherKey="UserProfileId" DeleteRule="CASCADE" />
+      <Association Name="TwitterUserProfile_Account" Member="Account" Storage="_Account" ThisKey="AccountId" OtherKey="Id" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

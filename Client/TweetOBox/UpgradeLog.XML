@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TweetOBox">
+</Property><Property Name="Solution File" Value="C:\BVProjects\tweetobox\Client\TweetOBox\TweetOBox.sln">
+</Property><Property Name="Date" Value="Saturday, February 12, 2011">
+</Property><Property Name="Time" Value="10:54 AM">
+</Property></Properties><Event ErrorLevel="0" Project="TweetOBoxMain" Source="TweetOBoxMain\TweetOBoxMain.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TweetOBoxMain" Source="TweetOBoxMain\TweetOBoxMain.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.TweetSharpWrap" Source="TOB.TweetSharpWrap\TOB.TweetSharpWrap.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.TweetSharpWrap" Source="TOB.TweetSharpWrap\TOB.TweetSharpWrap.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.Entities" Source="TOB.Entities\TOB.Entities.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.Entities" Source="TOB.Entities\TOB.Entities.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.DAL" Source="TOB.DAL\TOB.DAL.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.DAL" Source="TOB.DAL\TOB.DAL.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.BLL" Source="TOB.BLL\TOB.BLL.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.BLL" Source="TOB.BLL\TOB.BLL.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.DataInterfaces" Source="TOB.DataInterfaces\TOB.DataInterfaces.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.DataInterfaces" Source="TOB.DataInterfaces\TOB.DataInterfaces.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.Logger" Source="TOB.Logger\TOB.Logger.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.Logger" Source="TOB.Logger\TOB.Logger.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.Plugin" Source="TOB.Plugin\TOB.Plugin.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.Plugin" Source="TOB.Plugin\TOB.Plugin.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOBPlugin.PictureHelper" Source="Plugins\TOBPlugin.PictureHelper\TOBPlugin.PictureHelper.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOBPlugin.PictureHelper" Source="Plugins\TOBPlugin.PictureHelper\TOBPlugin.PictureHelper.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOBPlugin.WebPreview" Source="Plugins\TOBPlugin.WebPreview\TOBPlugin.WebPreview.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOBPlugin.WebPreview" Source="Plugins\TOBPlugin.WebPreview\TOBPlugin.WebPreview.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOB.Utility" Source="TOB.Utility\TOB.Utility.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOB.Utility" Source="TOB.Utility\TOB.Utility.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOBPlugin.TweetStats" Source="Plugins\TOBPlugin.TweetStats\TOBPlugin.TweetStats.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TOBPlugin.TweetStats" Source="Plugins\TOBPlugin.TweetStats\TOBPlugin.TweetStats.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="TweetOBox.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="TweetOBox.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TOBPlugin.PictureHelper" Source="Plugins\TOBPlugin.PictureHelper\TOBPlugin.PictureHelper.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOBPlugin.WebPreview" Source="Plugins\TOBPlugin.WebPreview\TOBPlugin.WebPreview.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOBPlugin.TweetStats" Source="Plugins\TOBPlugin.TweetStats\TOBPlugin.TweetStats.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TweetOBoxMain" Source="TweetOBoxMain\TweetOBoxMain.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.TweetSharpWrap" Source="TOB.TweetSharpWrap\TOB.TweetSharpWrap.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.Entities" Source="TOB.Entities\TOB.Entities.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.DAL" Source="TOB.DAL\TOB.DAL.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.BLL" Source="TOB.BLL\TOB.BLL.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.DataInterfaces" Source="TOB.DataInterfaces\TOB.DataInterfaces.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.Logger" Source="TOB.Logger\TOB.Logger.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.Plugin" Source="TOB.Plugin\TOB.Plugin.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TOB.Utility" Source="TOB.Utility\TOB.Utility.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

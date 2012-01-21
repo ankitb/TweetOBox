@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="TOBPlugin.PictureHelper.PicHelperControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="155" Width="310">
+  
+    <UserControl.Resources>
+        <ControlTemplate x:Key="MicroImageTemplate" TargetType="Button">
+            <Border CornerRadius="10" Background="SkyBlue">
+                <StackPanel Width="150">
+                    <TextBlock x:Name="UserLabel"  Text="{Binding User}" FontSize="10.5" Foreground="#FF200700"  FontWeight="Bold" FontFamily="Tahoma" TextAlignment="Center" />
+                    <Image Name="PostedPic" Source="{Binding Image}" Stretch="UniformToFill" Width="150" Height="140"/>
+                </StackPanel>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Grid Height="150" Width="310"  >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"></ColumnDefinition>
+            <ColumnDefinition Width="140"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Button Margin="0,0,5,0" Grid.Column="0" Name="Picture1" Template="{StaticResource MicroImageTemplate}" 
+                Visibility="Hidden" MouseEnter="Picture_MouseEnter" MouseLeave="Picture_MouseLeave" 
+                Cursor="Hand" Click="Picture_Click">
+        </Button>
+
+        <Button Margin="5,0,0,0" Grid.Column="1" Name="Picture2" Template="{StaticResource MicroImageTemplate}" 
+                Visibility="Hidden" MouseEnter="Picture_MouseEnter" MouseLeave="Picture_MouseLeave" 
+                Cursor="Hand" Click="Picture_Click">
+
+        </Button>
+
+        <Popup x:Name="ImageExpansionPopup" Width="700" Height="700" Placement="Left" HorizontalOffset="-15" PopupAnimation="Slide">
+            <Border BorderBrush="WhiteSmoke" BorderThickness="5" >
+                <StackPanel>
+                    <Grid Height="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Name="PopupProfileImage" Grid.Column="0"/>
+                        <TextBlock Name="PopupText" Margin="10,0" Grid.Column="1" Foreground="WhiteSmoke" FontSize="14" />
+                    </Grid>
+                    <Rectangle Fill="WhiteSmoke" Height="2"/>
+                    <Image Name="PopupImage" Stretch="Fill" Height="638" ></Image>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

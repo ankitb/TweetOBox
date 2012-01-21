@@ -1,0 +1,10 @@
+<publishData>
+  <publishTarget publishUrl="ftp://tweetobox.com/">
+    <file relUrl="bin/TOBKUIWCFService.pdb" publishTime="03/22/2010 23:47:06" />
+    <file relUrl="bin/TOBKPI.BLL.dll" publishTime="03/20/2010 14:23:49" />
+    <file relUrl="bin/TOBKPI.BLL.pdb" publishTime="03/20/2010 14:23:49" />
+    <file relUrl="Web.config" publishTime="03/22/2010 23:52:29" />
+    <file relUrl="bin/TOBKUIWCFService.dll" publishTime="03/22/2010 23:47:06" />
+    <file relUrl="Service.svc" publishTime="03/22/2010 23:35:27" />
+  </publishTarget>
+</publishData>

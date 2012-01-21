@@ -1,0 +1,66 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:TweetOBoxMain"
+	 x:Name="userProfileInfo" x:Class="TweetOBoxMain.UserControls.UserProfileDetails"
+    Width="335" mc:Ignorable="d" Margin="0,0,0,5">
+  <Grid>
+    <Image Source="/Images/bg_tweetTop.png" VerticalAlignment="Top"/>
+    <Border  BorderThickness="0"   Margin="0,8,0,3">
+      <Border.Background>
+        <ImageBrush ImageSource="/Images/bg_Tweets.png" />
+      </Border.Background>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.223*"/>
+          <ColumnDefinition Width="0.777*"/>
+        </Grid.ColumnDefinitions>
+        <Border Margin="8.45,3,13.45,0" Width="45" Height="45" BorderBrush="#FF819497" BorderThickness="1" VerticalAlignment="Top">
+          <!--<Border.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FFc2c2c2" GlowSize="3" Opacity="0.5" />
+          </Border.BitmapEffect>-->
+          <Image x:Name="imgUserPhoto" Source="{Binding UserProfile.ProfileImageUrl}" VerticalAlignment="Top"/>
+        </Border>
+        <StackPanel Grid.Column="1" >
+          <TextBlock x:Name="tbUserName" Foreground="#FF253F70" FontFamily="Tahoma" FontWeight="Bold" FontSize="11"/>
+          <TextBlock x:Name="tbLocation" Foreground="#FF49628F" FontSize="11" FontFamily="Tahoma"/>
+          <TextBlock x:Name="tbUserDesc" TextWrapping="Wrap" Foreground="#FF371800" FontSize="11" FontFamily="Tahoma" Margin="0,5,0,0"/>
+        </StackPanel>
+        <Path Fill="White" Stretch="Fill" Stroke="#FFD9D9D9" Margin="5,5,5,0" Height="1" Grid.ColumnSpan="2" Grid.Row="1" Data="M3,120 L300.00168,120" Width="310" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <Grid Grid.Column="1" Grid.Row="1" Height="50">
+        	<Grid.ColumnDefinitions>
+        		
+        		<ColumnDefinition Width="0.412*"/>
+        		<ColumnDefinition Width="0.281*"/>
+        		<ColumnDefinition Width="0.307*"/>
+        		
+        	</Grid.ColumnDefinitions>
+         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1">
+              <Image Source="/Images/Ic_follow.png" Grid.Column="2" Width="18" Margin="2,0,0,0"></Image>
+              <TextBlock x:Name="tbFollowers"  HorizontalAlignment="Left" Foreground="#FFA1600F" FontSize="10.667" FontFamily="Tahoma" VerticalAlignment="Center" FontWeight="Bold" Margin="2,3,3,0"  />
+            </StackPanel>
+			<StackPanel Orientation="Horizontal" Margin="0" d:LayoutOverrides="GridBox" Grid.Column="2" Width="29.199715" HorizontalAlignment="Left">
+              <Image Source="/Images/Ic_follower.png" Grid.Column="3" Width="18" Margin="0" HorizontalAlignment="Left"></Image>
+              <TextBlock x:Name="tbFollowing"  Margin="5,3,5,0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF0C5C04" FontSize="10.667" FontFamily="Tahoma" FontWeight="Bold" />
+            </StackPanel>			        
+         
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2">
+          <Button Name="dmuserProfile" Style="{DynamicResource DirectMsgTweetButtonStyle}"  Cursor="Hand" Margin="15,0,0,2" VerticalAlignment="Center" Command="local:TOBCommands.DirectTweet" CommandParameter="{Binding}" ToolTip="Direct Message"  />
+          <Button x:Name="btnUnFollow" Margin="5,0,0,0" Style="{DynamicResource UnFollwButtonStyle}" Width="21" Height="23" Content="Button" ToolTip="UnFollow" Cursor="Hand" Command="local:TOBCommands.UnFollowUser" CommandParameter="{Binding}"/>
+          <Button x:Name="btnFollow" HorizontalAlignment="Right" Margin="5,0,10.054,0" Style="{DynamicResource FollowUserButtonStyle}" Width="18" Content="Button" Visibility="Collapsed" Command="local:TOBCommands.FollowUser"  CommandParameter="{Binding}"/>
+          <Button Style="{DynamicResource UserProfileMoreButtonStyle}" VerticalAlignment="Center" Margin="3,0,0,18" Width="64" Visibility="Hidden"/>
+        </StackPanel>
+
+      </Grid>
+    </Border>
+    <Image Source="/Images/bg_tweetBtm.png" VerticalAlignment="Bottom"/>
+
+  </Grid>
+</UserControl>

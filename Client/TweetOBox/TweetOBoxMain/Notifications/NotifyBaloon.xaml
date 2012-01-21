@@ -1,0 +1,139 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:notify="clr-namespace:TweetOBoxMain.Notifications"  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" x:Class="TweetOBoxMain.Notifications.NotifyBaloon"
+    xmlns:pager="clr-namespace:TweetOBoxMain"
+    xmlns:scroll="clr-namespace:TweetOBoxMain.Utility"
+  Width="283"  mc:Ignorable="d" Height="125" >
+  <UserControl.Resources>
+    <notify:UIListPager x:Key="listPager" PageSize="1" />
+    <Style TargetType="{x:Type TextBlock}">
+      <Setter Property="Margin" Value="2 0"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="TextAlignment" Value="Right"/>
+    </Style>
+
+    <Style TargetType="{x:Type ButtonBase}">
+      <Setter Property="MinWidth" Value="25"/>
+      <Setter Property="Padding" Value="4 2"/>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type ButtonBase}}"/>
+    <Style TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type ButtonBase}}"/>
+    <Storyboard
+      x:Key="FadeInAndOut">
+      <DoubleAnimationUsingKeyFrames
+        BeginTime="00:00:00"
+        Storyboard.TargetName="grid"
+        Storyboard.TargetProperty="(UIElement.Opacity)">
+        <SplineDoubleKeyFrame
+          KeyTime="00:00:00"
+          Value="0" />
+        <SplineDoubleKeyFrame
+          KeyTime="00:00:01"
+          Value="0.895" />
+        <SplineDoubleKeyFrame
+          KeyTime="00:00:10"
+          Value="0.895" />
+        <SplineDoubleKeyFrame
+          KeyTime="00:00:11.6000000"
+          Value="0" />
+      </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+    <Style x:Key="NotifyItemsListBoxStyle" TargetType="{x:Type ListBoxItem}">
+    	<Setter Property="Background" Value="Transparent"/>
+    	<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+    	<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+    	<Setter Property="Padding" Value="2,0,0,0"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="{x:Type ListBoxItem}">
+    				<Border x:Name="Bd" SnapsToDevicePixels="true" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Width="275">
+              <Border x:Name="borderToggle" Style="{DynamicResource PanelsBorderStyle}" Width="275" CornerRadius="2" VerticalAlignment="Top" Margin="0,2" HorizontalAlignment="Left" Height="Auto" Background="{x:Null}" BorderThickness="0">
+                <Grid Margin="6,1,0,0">
+                	<Grid.ColumnDefinitions>
+                		<ColumnDefinition Width="0.239*"/>
+                		<ColumnDefinition Width="0.761*"/>
+                	</Grid.ColumnDefinitions>
+                	<Grid.RowDefinitions>
+                		<RowDefinition Height="0.567*"/>
+                		<RowDefinition Height="0.433*"/>
+                	</Grid.RowDefinitions>
+                 <Border Grid.RowSpan="2" BorderThickness="1" BorderBrush="Black" Width="45" Height="45" VerticalAlignment="Top">
+                		<Image Source="{Binding UserProfile.ProfileImageUrl}" VerticalAlignment="Top" Width="45" Height="45"/>
+                	</Border>
+                	<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Column="1" Margin="6,-3,0,0">
+                		<TextBlock Text="From: " Margin="0,0,5,0"/>
+                		<TextBlock Text="{Binding UserProfile.ScreenName}" FontWeight="Bold" FontSize="12" />
+                	</StackPanel>
+                	<TextBlock Text="{Binding Text}" TextWrapping="Wrap" Grid.RowSpan="1" Grid.Row="1" Margin="6,2,0,0" FontFamily="Tahoma" FontSize="11" Grid.ColumnSpan="1" Grid.Column="1" />
+                </Grid>
+              </Border>
+    				</Border>
+    				<ControlTemplate.Triggers>
+    					<Trigger Property="IsSelected" Value="true">
+    						<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+    						<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+    					</Trigger>
+    					<MultiTrigger>
+    						<MultiTrigger.Conditions>
+    							<Condition Property="IsSelected" Value="true"/>
+    							<Condition Property="Selector.IsSelectionActive" Value="false"/>
+    						</MultiTrigger.Conditions>
+    						<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+    						<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    					</MultiTrigger>
+    					<Trigger Property="IsEnabled" Value="false">
+    						<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+    					</Trigger>
+    				</ControlTemplate.Triggers>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+
+    
+  </UserControl.Resources>
+  <UserControl.Triggers>
+    <EventTrigger
+      RoutedEvent="notify:TaskbarIcon.BalloonShowing">
+      <BeginStoryboard
+        Storyboard="{StaticResource FadeInAndOut}"
+        x:Name="FadeInAndOut_BeginStoryboard" />
+    </EventTrigger>
+  </UserControl.Triggers>
+	<Grid x:Name="grid">	
+		<Border
+			x:Name="border"
+			CornerRadius="10,10,10,10"
+			Margin="0,0,5,5" Background="White"  BorderBrush="#FF8D3500" BorderThickness="1" Grid.RowSpan="2">
+			
+			<Grid>
+				<Image Source="/Images/bg_notifilg.png" HorizontalAlignment="Right" Margin="0" ></Image>
+			</Grid>
+		</Border>	
+		<Button x:Name="btnNotifyClose" VerticalAlignment="Top" Height="15"  Template="{DynamicResource DeleteButtonControlTemplate}" Width="15" HorizontalAlignment="Right" Margin="0,2,3,0" ToolTip="Close" RenderTransformOrigin="0.2,-0.267" Click="btnNotifyClose_Click" d:LayoutOverrides="GridBox"/>
+	
+    <DockPanel DataContext="{StaticResource listPager}" Margin="0,20,5,0" Grid.RowSpan="2" HorizontalAlignment="Left">
+    	<Grid Margin="0,0,0,8" Width="281.5" HorizontalAlignment="Left">
+    		<Grid.RowDefinitions>
+    			<RowDefinition Height="0.75*"/>
+    			<RowDefinition Height="0.25*"/>
+    		</Grid.RowDefinitions>
+    		 
+
+    		<ListBox Name="listBoxNotifies" ItemsSource="{Binding CurrentPage}" ItemContainerStyle="{DynamicResource NotifyItemsListBoxStyle}" Background="{x:Null}"
+    			BorderBrush="{x:Null}"
+    			ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,0,8,0" VerticalAlignment="Center" Height="80" HorizontalAlignment="Left" />
+    		<StackPanel Orientation ="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3.08" d:LayoutOverrides="Height" Grid.Row="1">
+				<TextBlock Name="tbCount" FontFamily="Tahoma"></TextBlock>
+				<TextBlock Name="tb" Text="/" FontFamily="Tahoma" ></TextBlock>
+				<TextBlock Name="tbTotalCount" FontFamily="Tahoma"></TextBlock>
+    			<RepeatButton Content="&lt;" Command="{Binding PreviousCommand}" Margin="5,0"/>
+    			<RepeatButton Content="&gt;" Command="{Binding NextCommand}"/>
+    		</StackPanel>
+    	</Grid>
+    </DockPanel>
+	</Grid>
+</UserControl>

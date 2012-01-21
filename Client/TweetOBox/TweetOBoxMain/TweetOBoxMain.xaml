@@ -1,0 +1,162 @@
+﻿<Window
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+mc:Ignorable="d" xmlns:TweetOBoxMain_Utility="clr-namespace:TweetOBoxMain.Utility"
+x:Class="TweetOBoxMain.TOBMain"  Title="TweetOBox"  Height="735" WindowStyle="None" AllowsTransparency="True"
+WindowStartupLocation="CenterScreen"  Icon="Images/windowIc.png"  
+xmlns:usercontrol="clr-namespace:TweetOBoxMain.UserControls" Style="{DynamicResource MainWindowStyle}"
+xmlns:local="clr-namespace:TweetOBoxMain"
+xmlns:notify="clr-namespace:TweetOBoxMain.Notifications"
+xmlns:custom="clr-namespace:TweetOBoxMain.CustomControls" Background="{x:Null}" MinHeight="700" MinWidth="140"  MaxWidth="730" StateChanged="Window_StateChanged" >
+  <Window.CommandBindings>
+    <CommandBinding Command="{x:Static local:TOBCommands.ReplyTweet}" x:Name="CommandReplyTweet" CanExecute="CommandReplyTweet_CanExecute" Executed="CommandReplyTweet_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ReTweet}" x:Name="CommandReTweet" CanExecute="CommandReTweet_CanExecute" Executed="CommandReTweet_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DirectTweet}" x:Name="CommandDirectTweet" CanExecute="CommandDirectTweet_CanExecute" Executed="CommandDirectTweet_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowUserProfile}" x:Name="CommandShowUserProfile" CanExecute="CommandShowUserProfile_CanExecute" Executed="CommandShowUserProfile_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowHomeView}" x:Name="CommandShowDefaultView" CanExecute="CommandShowDefaultView_CanExecute" Executed="CommandShowDefaultView_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowRepliesView}" x:Name="CommandShowRepliesView" CanExecute="CommandShowRepliesView_CanExecute" Executed="CommandShowRepliesView_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowRetweetsView}" x:Name="CommandShowRetweetView" CanExecute="CommandShowRetweetView_CanExecute" Executed="CommandShowRetweetView_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowUserProfileForTags}" x:Name="CommandShowUserProfileForTags" CanExecute="CommandShowUserProfileForTags_CanExecute" Executed="CommandShowUserProfileForTags_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DismissUIObject}" x:Name="CommandDismissUIObject" Executed="CommandDismissUIObject_Executed"></CommandBinding>
+
+    <CommandBinding Command="{x:Static local:TOBCommands.UnFollowUser}" x:Name="CommandUnFollowUser" CanExecute="CommandUnFollowUser_CanExecute" Executed="CommandUnFollowUser_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.BlockUser}" x:Name="CommandBlockUser" CanExecute="CommandBlockUser_CanExecute" Executed="CommandBlockUser_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ReportSpamUser}" x:Name="CommandReportSpamUser" CanExecute="CommandReportSpamUser_CanExecute" Executed="CommandReportSpamUser_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.MarkAsFavourite}" x:Name="CommandMarkAsFavourite" CanExecute="CommandMarkAsFavourite_CanExecute" Executed="CommandMarkAsFavourite_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowMarkasFavourite}" x:Name="CommandShowMarkasFavourite" CanExecute="CommandShowMarkasFavourite_CanExecute" Executed="CommandShowMarkasFavourite_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowDirectMessageView}" x:Name="CommandShowDirectMessageView" CanExecute="CommandShowDirectMessageView_CanExecute" Executed="CommandShowDirectMessageView_Executed"></CommandBinding>   
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowListUserProfile}" x:Name="CommandShowListUserProfile" CanExecute="CommandShowListUserProfile_CanExecute" Executed="CommandShowListUserProfile_Executed"></CommandBinding>
+
+    <CommandBinding Command="{x:Static local:TOBCommands.PluginCommand}" x:Name="CommandPluginCommand" CanExecute="CommandPluginCommand_CanExecute" Executed="CommandPluginCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.SaveFilterCommand}" x:Name="CommandSaveFilterCommand" CanExecute="CommandSaveFilterCommand_CanExecute" Executed="CommandSaveFilterCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.FilterCommand}" x:Name="CommandFilterCommand" CanExecute="CommandFilterCommand_CanExecute" Executed="CommandFilterCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.SearchCommand}" x:Name="CommandSearchCommand" CanExecute="CommandSearchCommand_CanExecute" Executed="CommandSearchCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DeleteSearchCommand}" x:Name="CommandDeleteSearchCommand" CanExecute="CommandDeleteSearchCommand_CanExecute" Executed="CommandDeleteSearchCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DeleteFilterCommand}" x:Name="CommandDeleteFilterCommand" CanExecute="CommandDeleteFilterCommand_CanExecute" Executed="CommandDeleteFilterCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.GroupsCommand}" x:Name="CommandGroupsCommand" CanExecute="CommandGroupsCommand_CanExecute" Executed="CommandGroupsCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DeleteGroupCommand}" x:Name="CommandDeleteGroupCommand" CanExecute="CommandDeleteGroupCommand_CanExecute" Executed="CommandDeleteGroupCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.AddToGroupCommand}" x:Name="CommandAddToGroupCommand" CanExecute="CommandAddToGroupCommand_CanExecute" Executed="CommandAddToGroupCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.RemoveFromList}" x:Name="CommandRemoveFromList" CanExecute="CommandRemoveFromList_CanExecute" Executed="CommandRemoveFromList_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DeletePluginCommand}" x:Name="CommandDeletePluginCommand" CanExecute="CommandDeletePluginCommand_CanExecute" Executed="CommandDeletePluginCommand_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.ShowFilterForTags}" x:Name="CommandShowFilterForTags" CanExecute="CommandShowFilterForTags_CanExecute" Executed="CommandShowFilterForTags_Executed"></CommandBinding>
+
+    <CommandBinding Command="{x:Static local:TOBCommands.DeleteTweets}" x:Name="CommandDeleteTweets" CanExecute="CommandDeleteTweets_CanExecute" Executed="CommandDeleteTweets_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.DeleteDirectMessages}" x:Name="CommandDeleteDirectMessages" CanExecute="CommandDeleteDirectMessages_CanExecute" Executed="CommandDeleteDirectMessages_Executed"></CommandBinding>
+    <CommandBinding Command="{x:Static local:TOBCommands.FollowUser}" x:Name="CommandFollowUser" CanExecute="CommandFollowUser_CanExecute" Executed="CommandFollowUser_Executed"></CommandBinding>
+  </Window.CommandBindings>
+
+  <Window.Resources>
+    <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
+      <Setter Property="AllowsTransparency" Value="true" />
+      <Setter Property="WindowStyle" Value="None" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Window}">
+            <Grid x:Name="CustomHingeWindowGrid">
+              <Border CornerRadius="5" Width="Auto"  Height="Auto" >
+                <Border  Width="Auto" Background="{x:Null}" Height="Auto" >
+                  <DockPanel
+                    HorizontalAlignment="Stretch"
+                    Background="Transparent"
+                    VerticalAlignment="Stretch">
+                    <ContentPresenter />
+                  </DockPanel>
+                </Border>
+              </Border>
+              <Line
+                 MouseDown="OnSizeNorth"
+                 Name="lnSizeNorth"
+                 Stroke="Transparent"
+                 Cursor="SizeNS"
+                 X1="10"
+                 X2="{TemplateBinding ActualWidth}"
+                 Y1="3"
+                 Y2="3"
+                 StrokeThickness="2"  />
+              <Line
+                MouseDown="OnSizeSouth"
+                Name="lnSizeSouth"
+                Stroke="Transparent"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNS"
+                X1="1"
+                X2="{TemplateBinding ActualWidth}"
+                Y1="{TemplateBinding ActualHeight}"
+                Y2="{TemplateBinding ActualHeight}"
+                StrokeThickness="2" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
+  <!--<Window.Triggers>
+    <EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
+  </Window.Triggers>-->
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="379"/>
+      <ColumnDefinition Width="349"/>
+    </Grid.ColumnDefinitions>
+    <notify:TaskbarIcon
+  x:Name="taskBar"
+  VerticalAlignment="Top"
+  IconSource="/Images/twitter-ic.ico"
+  ContextMenu="{DynamicResource tbMenu}" ToolTipText="TweetOBox"  ></notify:TaskbarIcon>
+    
+    <Border x:Name="borderMain"  Width = "345" Height ="Auto" Grid.Column="2" CornerRadius="10"  BorderBrush="#FFA5A5A5" BorderThickness="1" Margin="0" Grid.ColumnSpan="1" HorizontalAlignment="Center" OpacityMask="{x:Null}" Background="#59000000" >
+      <!--   <Border.BitmapEffect>
+        <BitmapEffectGroup>
+          <OuterGlowBitmapEffect GlowColor="Black" Opacity="3" GlowSize="5"  ></OuterGlowBitmapEffect>
+        </BitmapEffectGroup>
+      </Border.BitmapEffect> -->
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="0.971*"/>
+          <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+		
+        <DockPanel Grid.RowSpan="2" >
+          <usercontrol:UserTweets  x:Name="userTweets"  DockPanel.Dock="Top" OnCollapseUserDetails="userTweets_OnCollapseUserDetails" Margin="0,5,0,0"  />
+          <usercontrol:UserProfileDetails x:Name="userProfileTOB" DockPanel.Dock="Top" Visibility="Collapsed"  />
+          <Frame DockPanel.Dock="Top" Margin="0,2,0,0" Width="335" NavigationUIVisibility="Hidden" x:Name="frmTOBMain" />
+        </DockPanel>
+        <TextBlock x:Name="tbStatus" Grid.Row="1" VerticalAlignment="Center" Foreground="#FFFFFFFF" Height="20" Margin="10,0,0,-15" FontFamily="Tahoma" FontSize="11" Text="Ready" />
+      
+      </Grid>
+    </Border>
+    <Border x:Name="borderNavPanel" Margin="0,105,-2,0" MouseEnter="borderNavPanel_MouseEnter" MouseLeave="borderNavPanel_MouseLeave">
+      <Grid  VerticalAlignment="Top" Height="Auto" HorizontalAlignment="Right" Width="385">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.935*"/>
+          <ColumnDefinition Width="0.065*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0">
+          <Button x:Name="btnHome" Content="Home"  Template="{DynamicResource SideHomeButtonControlTemplate}" Foreground="White" Width="Auto" MinWidth="160" VerticalAlignment="Bottom" >
+            <Button.LayoutTransform>
+              <RotateTransform Angle="270"/>
+            </Button.LayoutTransform>
+          </Button>
+        </Border>
+        <Border x:Name="borderAccountInfo"  HorizontalAlignment="Right" VerticalAlignment="Bottom"  Background="#02FFFFFF" Visibility="Hidden" Margin="0,1,-2,0" >
+          <Button Background="#02FFFFFF">
+            <Button.Template>
+              <ControlTemplate TargetType="{x:Type Button}">
+                <TextBlock TextDecorations="None">
+                  <InlineUIContainer>
+                    <ContentPresenter />
+                  </InlineUIContainer>
+                </TextBlock>
+              </ControlTemplate>
+            </Button.Template>
+            <usercontrol:AccountInfo x:Name="accountInfo" Visibility="Visible"  />
+          </Button>
+        </Border>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

@@ -1,0 +1,215 @@
+﻿<Window  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mcc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:d1="http://schemas.microsoft.com/expression/interactivedesigner/2006"
+    x:Class="TweetOBoxMain.TweetOBoxAccount"  WindowStyle="None" Width="450"
+         AllowsTransparency="True" WindowStartupLocation="CenterScreen"  MouseDown="Window_MouseDown"
+         Title="TweetOBox" Icon="Images/windowIc.png" Background="{x:Null}" >
+
+  <Window.Resources>
+    <Storyboard x:Key="OnLoaded"/>
+    <DataTemplate x:Key="listBoxTemplate">
+      <StackPanel Margin="4">
+        <DockPanel >
+          <Image Source="Images/Ic_acctick.png" Margin="0,0,2,0"  ></Image>
+          <TextBlock FontWeight="Normal" Text="Account added:"
+            DockPanel.Dock="Left" Foreground="#FFefaf96" FontFamily="Tahoma" FontSize="11"
+            Margin="2,4,0,0"/>
+          <TextBlock Text="  " />
+          <TextBlock Text="{Binding Username}" FontWeight="Bold" Foreground="#FF952A00" FontFamily="Tahoma" FontSize="11" Margin="0,4,0,0"  />
+          <Button x:Name="btnContactDelete" Content="{Binding Id}"  VerticalAlignment="Bottom" Height="15"  Template="{DynamicResource DeleteButtonControlTemplate}" Width="15" HorizontalAlignment="Left" Margin="5,5,0,0" Click="btnContactDelete_Click" ToolTip="Delete Account" DataContext="{Binding  Mode=OneWay}"/>
+        </DockPanel>
+      </StackPanel>
+    </DataTemplate>
+  </Window.Resources>
+
+  <Window.Triggers>
+    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+      <BeginStoryboard x:Name="_OnLoaded" Storyboard="{DynamicResource OnLoaded}"/>
+    </EventTrigger>
+  </Window.Triggers>
+
+  <StackPanel Margin="0,3,0,0">
+
+    <Border  Margin="0" CornerRadius="8,8,0,0" Width="444"   BorderThickness="0.8,0.8,0.8,0.8" BorderBrush="White" VerticalAlignment="Center" >
+      <StackPanel VerticalAlignment="Center" >
+        <Border HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="442" CornerRadius="8,8,0,0">
+        	<Border.Background>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="#FF975E4F" Offset="0"/>
+        			<GradientStop Color="#FF735147" Offset="1"/>
+        		</LinearGradientBrush>
+        	</Border.Background>
+      		<DockPanel Height="22">
+      			<!--<Image Source="Images/toblogo.png" Height="32" Width="123" HorizontalAlignment="Left" Margin="0,0,0,-10"/>-->
+      			<Button HorizontalAlignment="Right" Margin="0,0,10,0" Style="{DynamicResource AccountCloseButtonStyle}" Width="11" Height="10"  DockPanel.Dock="Right" Click="btnClose_Click" Cursor="Hand"/>
+      			<Button x:Name="btnClose" DockPanel.Dock="Right" Visibility="Collapsed" Content="X" Width="20" Height="18" Margin="0,0,7,0" Template="{DynamicResource CloseButtonControlTemplate}" FontFamily="Tahoma" FontWeight="Bold" Click="btnClose_Click" FontSize="13.333" VerticalAlignment="Top" HorizontalAlignment="Right">
+      				<Button.Style>
+      					<Style TargetType="{x:Type Button}">
+      						<Setter Property="Foreground" Value="#FF666563" />
+      						<Setter Property="FontWeight" Value="Bold" />
+      						<Style.Triggers>
+      							<Trigger Property="IsMouseOver" Value="true">
+      								<Setter Property="Foreground" Value="#FF0F3F92" />
+      							</Trigger>
+      						</Style.Triggers>
+      					</Style>
+      				</Button.Style>
+      				<Button.ToolTip>
+      					<TextBlock Text="Close"/>
+      				</Button.ToolTip>
+      			</Button>
+      		</DockPanel>
+      	</Border>
+      	<Grid >
+      		<Grid.ColumnDefinitions>
+      			<ColumnDefinition Width="136"/>
+      			<ColumnDefinition/>
+      		</Grid.ColumnDefinitions>
+      		<Grid.RowDefinitions>
+      			<RowDefinition Height="Auto"/>
+      			<RowDefinition />
+      		</Grid.RowDefinitions>
+      		<Border Grid.ColumnSpan="2" Grid.RowSpan="2">
+      			<Border.Background>
+      				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+      					<GradientStop Color="#FF220700" Offset="0"/>
+      					<GradientStop Color="#FF3C1100" Offset="1"/>
+      				</LinearGradientBrush>
+      			</Border.Background>
+      		</Border>
+			<Image Source="Images/toblogo.png" Height="38" Width="146" HorizontalAlignment="Left" Margin="10,-15,-20,-10" VerticalAlignment="Top"/>
+      		<Image Source="Images/Bg_tweetbird.png" Width="79" Margin="20,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="130"  />
+      		<StackPanel Margin="0,10,0,-0.4" Grid.Column="1" Orientation="Vertical">
+      			<Border x:Name="borderUsers" Margin="5,5,0,0" Width="284" Height="Auto"  VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed" >
+
+      				<ListBox ItemsSource="{Binding}" x:Name="listBoxUser"   ItemContainerStyle="{DynamicResource SimpleListBoxItem}"
+      					ItemTemplate="{StaticResource listBoxTemplate}" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}"   />
+      			</Border>
+
+      			<Border x:Name="borderOAuth" Visibility="Collapsed" Margin="9,8,0,0" Width="284" Height="104" CornerRadius="7" BorderThickness="1,0.7,0.7,0.7" BorderBrush="#FF8A8787" VerticalAlignment="Top" HorizontalAlignment="Left" >
+      				<Border.Background>
+      					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+      						<GradientStop Color="#FFEFEFEF" Offset="1"/>
+      						<GradientStop Color="#FFE6E5E5" Offset="1"/>
+      						<GradientStop Color="#FFEFEFEF" Offset="0.987"/>
+      						<GradientStop Color="#FFEFEFEF" Offset="0.013"/>
+      					</LinearGradientBrush>
+      				</Border.Background>
+      				<StackPanel Orientation="Vertical">
+      					<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Height="26" Orientation="Horizontal" Margin="3,3,0,0" VerticalAlignment="Top">
+      						<Label Content="Add Your" Margin="2,1,0,0" Foreground="#FF575757"/>
+
+      						<Image Source="Images/tweetAddlogo.png" VerticalAlignment="Top" Height="15" Width="63" Margin="0,6,0,0"/>
+      						<Label Content="account" Margin="0,1,0,0" Foreground="#FF575757"/>
+      					</StackPanel>
+
+      					<TextBlock x:Name="lbltext1" Text="You need to obtain an authorized pin from twitter.com in" Margin="10,2,5,0" FontFamily="Tahoma" FontSize="10" Foreground="#FF565656"/>
+      					<TextBlock x:Name="lbltext2" Text="order to login. To do that, please authorise ToB to take " Margin="10,2,10,0" FontFamily="Tahoma" FontSize="10" Foreground="#FF565656"/>
+      					<TextBlock x:Name="lbltext3" Text="you to twitter.com."  Margin="10,2,10,0" FontFamily="Tahoma" FontSize="10" Foreground="#FF565656"/>
+      					<Button x:Name="btnAuthorize" Content="Authorize at twitter.com" Width="200" Height="25" Click="btnAuthorize_Click" Margin="90,0,0,0" Template="{DynamicResource AuthorizeButtonControlTemplate}" />
+      					<StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+      						<TextBlock Visibility="Collapsed" Text="" x:Name="lblPin" Height="22" Margin="0,0,0,0" />
+      						<TextBox  Visibility="Collapsed" Width="150" Height="22" x:Name="txtEnterPin" Margin="5,0,0,0" Style="{DynamicResource EnterPinTextBoxStyle}" />
+      						<Button x:Name="btnAuthorizeOk" Content="Ok" Width="Auto" Height="Auto" Visibility="Collapsed" Margin="15,0,0,0" Click="btnAuthorizeOk_Click" Template="{DynamicResource MainWindowButtonTemplate}" Background="{DynamicResource DarkButtonsBrush}" />
+      					</StackPanel>
+      				</StackPanel>
+
+      			</Border>
+
+      			<Border x:Name="borderAccount" Margin="9,8,0,0" Width="284" Height="104" CornerRadius="7" BorderThickness="1,0.9,0.7,0.7" BorderBrush="#FF8A8787" VerticalAlignment="Top" HorizontalAlignment="Left" >
+      				<Border.Background>
+      					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+      						<GradientStop Color="#FFFAFAFA" Offset="0"/>
+      						<GradientStop Color="#FFF0F0F0" Offset="1"/>
+      					</LinearGradientBrush>
+      				</Border.Background>
+      				<Grid>
+      					<Grid.ColumnDefinitions>
+      						<ColumnDefinition Width="0.624*"/>
+      						<ColumnDefinition Width="0.05*"/>
+      						<ColumnDefinition Width="0.326*"/>
+      					</Grid.ColumnDefinitions>
+      					<Grid.RowDefinitions>
+      						<RowDefinition Height="30"/>
+      						<RowDefinition Height="0.45*"/>
+      						<RowDefinition Height="0.449*"/>
+      						<RowDefinition Height="0.101*"/>
+      					</Grid.RowDefinitions>
+      					<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Height="30" Orientation="Horizontal" Margin="3,3,0,0" VerticalAlignment="Top">
+      						<Label x:Name="lblAddAcc" Content="Add Your" Margin="2,1,0,0" Foreground="#FF420D00"/>
+
+      						<Image Source="Images/tweetAddlogo.png" VerticalAlignment="Top" Height="15" Width="63" Margin="0,6,0,0"/>
+      						<Label Content="account" Margin="0,1,0,0" Foreground="#FF420D00"/>
+      					</StackPanel>
+      					<TextBox x:Name="txtUserName"  Grid.Column="0" Grid.Row="1" Height="20" Background="White" Margin="10,2,0,4.958"  TextChanged="txtUserName_TextChanged" Foreground="#FF818080" Template="{DynamicResource UserNameTextBoxControlTemplate}"  />
+
+      					<PasswordBox  x:Name="txtPassword" Grid.Column="0" Grid.Row="2" Height="20" Margin="10,0,0,4.957"  PasswordChanged="txtPassword_PasswordChanged" Style="{DynamicResource PasswordBoxStyle2}" Foreground="#FF818080" KeyDown="txtPassword_KeyDown"/>
+      					<Path Fill="White" Stretch="Fill" Stroke="#FF818080" HorizontalAlignment="Left" Margin="10,4,0,3.957" Width="0.4" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Data="M193.952,37 L193.952,104.87456"/>
+      					<Button x:Name="btnAddContact" Grid.RowSpan="2"  Content="Add" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="60" Template="{DynamicResource ButtonControlTemplateNormal}" Margin="13,-12,0,3.1" FontSize="13.333" Click="btnAddContact_Click" IsEnabled="False" Background="{DynamicResource DarkButtonsBrush}" VerticalAlignment="Center" Cursor="Hand" />
+
+      					<Button Margin="6,5,-2.984,9" Content="Forgot password?" FontFamily="Tahoma" Grid.Column="2" Grid.Row="2" Cursor="Hand" Padding="1" FontSize="10" Foreground="#FF712000" BorderThickness="1">
+      						<Button.Template>
+      							<ControlTemplate TargetType="{x:Type Button}">
+      								<TextBlock TextDecorations="None"><InlineUIContainer>
+      										<ContentPresenter />
+      									</InlineUIContainer></TextBlock>
+      							</ControlTemplate>
+      						</Button.Template>
+      						<Button.Style>
+      							<Style TargetType="{x:Type Button}">
+      								<Setter Property="Foreground" Value="#FF0F3F92" />
+      								<Style.Triggers>
+      									<Trigger Property="IsMouseOver" Value="true">
+      										<Setter Property="Foreground" Value="#FF0F3F92" />
+      									</Trigger>
+      								</Style.Triggers>
+      							</Style>
+      						</Button.Style>
+      					</Button>
+      				</Grid>
+      			</Border>
+      			<Border  Width="140" CornerRadius="0,0,5,5" Height="20" HorizontalAlignment="Right"  Margin="0,0,20,10" Visibility="Hidden" >
+      				<Border.Background>
+      					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+      						<GradientStop Color="#FFD6D6D6" Offset="0"/>
+      						<GradientStop Color="White" Offset="1"/>
+      						<GradientStop Color="WhiteSmoke" Offset="0.353"/>
+      					</LinearGradientBrush>
+      				</Border.Background>
+      				<Border.BitmapEffect>
+      					<OuterGlowBitmapEffect GlowColor="AliceBlue" Opacity="0.8" GlowSize="2"/>
+      				</Border.BitmapEffect>
+      				<Button x:Name="btnoAuthentication" Content="Use Open Authentication?" Template="{DynamicResource btnOAuthControlTemplate}" Width="Auto" Height="Auto" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="10" Foreground="#FF712000" Click="btnoAuthentication_Click" Margin="12.91,0,0,0"/>
+
+
+      			</Border>
+      		</StackPanel>
+
+
+
+      		<TextBlock x:Name="lblMessage" Grid.Column="1" Grid.Row="1"  Height="20" Text="You can add another Twitter account after you have added one." TextWrapping="Wrap" FontFamily="Tahoma" FontSize="10" Foreground="White" Margin="10,0,0,6" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+
+      	</Grid>
+
+      </StackPanel>
+
+
+
+    </Border>
+    <Border Height="40" Width="444"  CornerRadius="0,0,8,8" BorderThickness="0.7,0,0.7,1" BorderBrush="White" Margin="0" >
+    	<Border.Background>
+    		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    			<GradientStop Color="#FF320E00" Offset="0"/>
+    			<GradientStop Color="#FF3B1100" Offset="1"/>
+    		</LinearGradientBrush>
+    	</Border.Background>
+      <Button x:Name="btnLaunchTweetBox" IsEnabled="False" Height="21.796" Content="Launch TweetOBox" Canvas.Left="230" Canvas.Top="6"  VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnLaunchTweetBox_Click" Margin="0,0,0,2" Template="{DynamicResource BtnLaunchControlTemplate}" />
+
+    </Border>
+
+  </StackPanel>
+
+</Window>

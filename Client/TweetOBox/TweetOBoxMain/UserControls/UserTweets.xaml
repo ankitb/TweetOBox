@@ -1,0 +1,657 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:TweetOBoxMain_Utility="clr-namespace:TweetOBoxMain.Utility"
+    xmlns:custom="clr-namespace:TweetOBoxMain.CustomControls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:TweetOBoxMain"
+    xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    x:Name="userControlTweets" x:Class="TweetOBoxMain.UserControls.UserTweets"
+    Height="Auto" Width="335" Loaded="userControlTweets_Loaded">
+  <UserControl.Resources>
+    <!--<TweetOBoxMain_Utility:TweetsLengthConverter x:Key="TweetsLengthConverter"/>-->
+    <TweetOBoxMain_Utility:GlobalSearchProviderPresenter x:Key="GlobalSearchProviderPresenterDataSource" d:IsDataSource="True"/>
+    <TweetOBoxMain_Utility:TweetTextCount x:Key="TweetTextCount"/>
+    <DataTemplate x:Key="AccountlistBoxTemplate">
+      <CheckBox Content="{Binding Username}" Margin="0,3,12,0"  IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Background="{x:Null}" Click="CheckBox_Click" Style="{DynamicResource CheckBoxStyle}"   />
+    </DataTemplate>
+    
+    <Storyboard x:Key="OnTweetButtonChecked">
+      <!--<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="borderTweetText" Storyboard.TargetProperty="(UIElement.Visibility)">
+        <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+      </ObjectAnimationUsingKeyFrames>-->    
+      <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="borderTweetText" Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        <SplineDoubleKeyFrame KeyTime="00:00:0.50000" Value="1"/>
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="borderTweetText" Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        <SplineDoubleKeyFrame KeyTime="00:00:0000000" Value="1"/>
+      </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+      
+    <Storyboard x:Key="OnClick1">
+    	<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="btnTweet" Storyboard.TargetProperty="(ToggleButton.IsChecked)">
+    		<DiscreteObjectKeyFrame KeyTime="00:00:00">
+    			<DiscreteObjectKeyFrame.Value>
+    				<System:Boolean>False</System:Boolean>
+    			</DiscreteObjectKeyFrame.Value>
+    		</DiscreteObjectKeyFrame>
+    	</ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="OnClick2">
+      <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="btnTweet" Storyboard.TargetProperty="(ToggleButton.IsChecked)">
+        <DiscreteObjectKeyFrame KeyTime="00:00:00">
+          <DiscreteObjectKeyFrame.Value>
+            <System:Boolean>True</System:Boolean>
+          </DiscreteObjectKeyFrame.Value>
+        </DiscreteObjectKeyFrame>
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Style x:Key="ComboBoxFocusVisual">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Stroke="Black" StrokeDashArray="1 2" StrokeThickness="1" Margin="4,4,21,4" SnapsToDevicePixels="true"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="InfoBoxCombo" TargetType="{x:Type ComboBox}">
+      <Setter Property="FocusVisualStyle" Value="{StaticResource ComboBoxFocusVisual}"/>
+      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+      <Setter Property="BorderBrush" Value="#FF7F9DB9"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="0,1"/>
+      <Setter Property="IsTabStop" Value="false"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Template" Value="{DynamicResource ComboBoxEditableTemplate}"/>
+      <Setter Property="IsEditable" Value="False"/>
+    </Style>
+
+    <Style x:Key="rbnPatSearchInfoTextBoxStyle123" TargetType="{x:Type custom:SearchTextBox}">
+      <Setter Property="Margin" Value="1,1,1,1"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type custom:SearchTextBox}">
+            <ControlTemplate.Resources>
+              <Storyboard x:Key="enterHasText">
+                <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" From="0.33" To="0"/>
+              </Storyboard>
+              <Storyboard x:Key="exitHasText">
+                <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+              </Storyboard>
+              <Storyboard x:Key="enterGotFocus">
+                <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" To="0.33"/>
+              </Storyboard>
+              <Storyboard x:Key="exitGotFocus">
+                <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+              </Storyboard>
+            </ControlTemplate.Resources>
+            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <!--   <Image HorizontalAlignment="Left" Margin="2,0,0,0" Width="14" Height="14" Source="Images/RibbonIcons/GlobalSearchIcons/SearchIcon.png"/> -->
+                <Decorator Margin="20,0,3,0" x:Name="PART_ContentHost" VerticalAlignment="Center" />
+                <TextBlock IsHitTestVisible="False" Opacity="0.4" HorizontalAlignment="Stretch" Margin="19,0,0,0" x:Name="Message" VerticalAlignment="Center" FontStyle="Normal" Foreground="#FFA9A7A7" Text="{Binding WatermarkText, Mode=Default}" DataContext="{Binding SelectedItem, ElementName=cboSearchTableSelector, Mode=Default}"/>
+                <ComboBox x:Name="cboSearchTableSelector" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Grid.Column="1" BorderBrush="{x:Null}" ItemContainerStyle="{DynamicResource ComboBoxItem1}" SelectionChanged="cboSearchTableSelector_SelectionChanged" SelectedIndex="0" Style="{DynamicResource InfoBoxCombo}" BorderThickness="0" Margin="0,1,1,1" ItemsSource="{Binding SearchProviders, Mode=Default}" IsTabStop="False"/>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="Button" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{DynamicResource btnInfoTextSearchStyle}" Margin="4,3,25,3" x:Name="btnPatientSearch" Visibility="Collapsed"/>
+              </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+              <MultiTrigger>
+                <MultiTrigger.Conditions>
+                  <Condition Property="HasText" Value="False"/>
+                  <Condition Property="IsFocused" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiTrigger.ExitActions>
+                <MultiTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" To="0"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiTrigger.EnterActions>
+              </MultiTrigger>
+              <Trigger Property="HasText" Value="True">
+                <Trigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" From="0.33" To="0"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </Trigger.ExitActions>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+              </Trigger>
+              <Trigger Property="Width" Value="NaN">
+                <Setter Property="MinWidth" Value="100"/>
+              </Trigger>
+              <Trigger Property="Height" Value="NaN">
+                <Setter Property="MinHeight" Value="20"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.BasedOn>
+        <Style TargetType="{x:Type TextBox}">
+          <Style.BasedOn>
+            <Style TargetType="{x:Type TextBoxBase}">
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+              <Setter Property="BorderBrush" Value="#FF7F9DB9"/>
+              <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+              <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+              <Setter Property="BorderThickness" Value="1,1,1,1"/>
+              <Setter Property="HorizontalContentAlignment" Value="Left"/>
+              <Setter Property="Padding" Value="2,2,2,2"/>
+              <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+              <Setter Property="AllowDrop" Value="True"/>
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border SnapsToDevicePixels="True" x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                      <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </Style.BasedOn>
+        </Style>
+      </Style.BasedOn>
+    </Style>
+
+    <Style x:Key="rbnPatSearchInfoTextBoxStyle" TargetType="{x:Type custom:SearchTextBox}">
+      <Setter Property="Margin" Value="1,1,1,1"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type custom:SearchTextBox}">
+            <ControlTemplate.Resources>
+              <Storyboard x:Key="enterHasText">
+                <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" From="0.33" To="0"/>
+              </Storyboard>
+              <Storyboard x:Key="exitHasText">
+                <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+              </Storyboard>
+              <Storyboard x:Key="enterGotFocus">
+                <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" To="0.33"/>
+              </Storyboard>
+              <Storyboard x:Key="exitGotFocus">
+                <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+              </Storyboard>
+            </ControlTemplate.Resources>
+            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" DataContext="{Binding Source={StaticResource GlobalSearchProviderPresenterDataSource}}" CornerRadius="3">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="40"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="cboSearchTableSelector" IsSynchronizedWithCurrentItem="True"  VerticalAlignment="Top" Width="130" Grid.Column="0" BorderBrush="{x:Null}" ItemContainerStyle="{DynamicResource ComboBoxItem1}" SelectionChanged="cboSearchTableSelector_SelectionChanged" SelectedIndex="0" BorderThickness="0,0,5,0" Margin="0,1,5,1" IsTabStop="False" ItemsSource="{Binding SearchProviders, Mode=Default}" Template="{DynamicResource ComboBoxEditableTemplate}" Style="{DynamicResource InfoBoxCombo}"/>
+                <ScrollViewer Margin="0,0,3,0" x:Name="PART_ContentHost"  Grid.Column="1" VerticalAlignment="Center" PreviewKeyDown="txtSearchBox_KeyDown" KeyUp="PART_ContentHost_KeyDown"  />
+                <TextBlock IsHitTestVisible="False" Opacity="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="Message" VerticalAlignment="Center" FontStyle="Italic" Foreground="#FF859699" Text="{Binding WatermarkText, Mode=Default}" DataContext="{Binding SelectedItem, ElementName=cboSearchTableSelector, Mode=Default}" FontSize="10" FontFamily="Tahoma"/>
+                <Button x:Name="btnSearchSave" HorizontalAlignment="Right" Margin="5,1,20,0" Style="{DynamicResource FilterSaveButtonStyle}" Width="11" Height="11" Grid.Column="1" Content="" ToolTip="Save Search" Command="local:TOBCommands.SaveSearchCommand" d:IsHidden="True" />
+                <Button x:Name="btnMainSearch" HorizontalAlignment="Right" Margin="5,0,4,0" Style="{DynamicResource FilterTextButtonStyle}" Width="14" Height="14" Grid.Column="1" Command="local:TOBCommands.ShowHomeView" Click="btnMainSearch_Click" ToolTip="Clear"/>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="Button" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{DynamicResource btnInfoTextSearchStyle}" Margin="4,3,25,3" x:Name="btnPatientSearch"  Visibility="Collapsed"/>
+              </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="Text" Value="">
+                <Setter Property="Visibility" Value="Collapsed" TargetName="btnSearchSave"/>
+                <Setter Property="Style" TargetName="btnMainSearch" Value="{DynamicResource UserSearchButtonStyle}"/>
+              </Trigger>
+              <Trigger Property="IsFocused" Value="True"/>
+              <Trigger Property="IsFocused" Value="False"/>
+              <MultiTrigger>
+                <MultiTrigger.Conditions>
+                  <Condition Property="HasText" Value="False"/>
+                  <Condition Property="IsFocused" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiTrigger.ExitActions>
+                <MultiTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" To="0"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiTrigger.EnterActions>
+              </MultiTrigger>
+              <Trigger Property="HasText" Value="True">
+                <Trigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.2000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity" From="0.33" To="0"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Duration="00:00:00.4000000" Storyboard.TargetName="Message" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </Trigger.ExitActions>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <!--<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>-->
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+              </Trigger>
+              <Trigger Property="Width" Value="NaN">
+                <Setter Property="MinWidth" Value="100"/>
+              </Trigger>
+              <Trigger Property="Height" Value="NaN">
+                <Setter Property="MinHeight" Value="20"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.BasedOn>
+        <Style TargetType="{x:Type TextBox}">
+          <Style.BasedOn>
+            <Style TargetType="{x:Type TextBoxBase}">
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+              <Setter Property="BorderBrush" Value="#FF7F9DB9"/>
+              <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+              <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+              <Setter Property="BorderThickness" Value="1,1,1,1"/>
+              <Setter Property="HorizontalContentAlignment" Value="Left"/>
+              <Setter Property="Padding" Value="2,2,2,2"/>
+              <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+              <Setter Property="AllowDrop" Value="True"/>
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border SnapsToDevicePixels="True" x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                      <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsEnabled" Value="False">
+                        <!--<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>-->
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </Style.BasedOn>
+        </Style>
+      </Style.BasedOn>
+    </Style>
+
+    <Style x:Key="ComboBoxItem1" TargetType="{x:Type ComboBoxItem}">
+      <Setter Property="SnapsToDevicePixels" Value="true"/>
+      <Setter Property="OverridesDefaultStyle" Value="true"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+            <Border
+    x:Name="Border"
+    Padding="2"
+			BorderThickness="1"
+    SnapsToDevicePixels="true" Background="#02FFFFFF">
+              <StackPanel Orientation="Horizontal">
+                <Image Width="Auto" Height="16" VerticalAlignment="Stretch" Margin="2,2,3,2" Source="{Binding RelativeUrl, Mode=Default}"/>
+                <ContentPresenter Content="{Binding DisplayName, Mode=Default}" ContentSource="{Binding DisplayName, Mode=Default}" d:LayoutOverrides="Width" VerticalAlignment="Center" Margin="0,0,4,0" />
+              </StackPanel>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsHighlighted" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#FFF5F5F5"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="Red"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Foreground" Value="#FF52565B"/>
+    </Style>
+
+    <LinearGradientBrush x:Key="ItemHoverBackground" EndPoint="0,1" StartPoint="0,0">
+      <GradientStop Color="#FFF5F5F5" Offset="0"/>
+      <GradientStop Color="#FFF5F5F5" Offset="1"/>
+      <GradientStop Color="#FFEBEBEB" Offset="0.159"/>
+      <GradientStop Color="#FFEBEBEB" Offset="0.823"/>
+      <GradientStop Color="#FFEFEFEF" Offset="0.064"/>
+      <GradientStop Color="#FFEEEEEE" Offset="0.932"/>
+    </LinearGradientBrush>
+
+    <Style x:Key="btnInfoTextSearchStyle" TargetType="{x:Type Button}">
+      <Setter Property="Background" Value="Red"/>
+      <Setter Property="BorderBrush" Value="#FF003C74"/>
+      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Button}">
+            <!--    <Image Source="/Images/tick.png"/> -->
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsKeyboardFocused" Value="true"/>
+              <Trigger Property="ToggleButton.IsChecked" Value="true"/>
+              <!--<Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+              </Trigger>-->
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+
+    <Storyboard x:Key="TweetsCollapseStoryBoard">
+      <!--<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Shape7" Storyboard.TargetProperty="(UIElement.Visibility)">
+        <DiscreteObjectKeyFrame KeyTime="00:00:00.5000000" Value="{x:Static Visibility.Collapsed}"/>
+      </ObjectAnimationUsingKeyFrames>-->
+      <!--<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Shape_27" Storyboard.TargetProperty="(UIElement.Visibility)">
+        <DiscreteObjectKeyFrame KeyTime="00:00:00.5000000" Value="{x:Static Visibility.Visible}"/>
+      </ObjectAnimationUsingKeyFrames>-->
+      <!--<ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Shape_27" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+        <SplineThicknessKeyFrame KeyTime="00:00:00.5000000" Value="1,0,0,0"/>
+      </ThicknessAnimationUsingKeyFrames>-->
+      <!--<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="Tweet" Storyboard.TargetProperty="(UIElement.Visibility)">
+        <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+      </ObjectAnimationUsingKeyFrames>-->
+      <!--<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="Shape_2_copy_9" Storyboard.TargetProperty="(UIElement.Visibility)">
+        <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+      </ObjectAnimationUsingKeyFrames>-->
+      <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="borderTweetText" Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        <SplineDoubleKeyFrame KeyTime="00:00:0.50000" Value="0"/>
+      </DoubleAnimationUsingKeyFrames>
+      <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="borderTweetText" Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        <SplineDoubleKeyFrame KeyTime="00:00:0.5000000" Value="0"/>
+      </DoubleAnimationUsingKeyFrames>-->
+    </Storyboard>
+
+
+  	<Style x:Key="TweetToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+  	
+  		
+  		<Setter Property="BorderThickness" Value="1"/>
+  		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+  		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+  		<Setter Property="VerticalContentAlignment" Value="Center"/>
+  		<Setter Property="Padding" Value="1"/>
+  		<Setter Property="Template">
+  			<Setter.Value>
+  				<ControlTemplate TargetType="{x:Type ToggleButton}">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="0.344*"/>
+							<ColumnDefinition Width="0.656*"/>
+						</Grid.ColumnDefinitions>
+						<Image x:Name="Shape7" Width="81" Height="27" Canvas.Left="0" Canvas.Top="0" Source="\Images\bg_tweetwyt.png" Visibility="Collapsed" Grid.ColumnSpan="2"/>
+					 <Image x:Name="Shape_27" Width="81" Height="27" Source="\Images\Bg_toggletweet.png" Margin="0,0,-1,0" Grid.ColumnSpan="2" Visibility="Visible"/>
+					 <Image x:Name="Shape_2_copy_9" Width="22" Height="19" Source="\Images\Bg_toggleMsg.png" Margin="6,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="0" d:LayoutOverrides="Width"/>
+					  <TextBlock x:Name="Tweet" FontFamily="Tahoma" FontSize="11.5" Foreground="#FFFFFFFF" IsHyphenationEnabled="True" LineHeight="11" LineStackingStrategy="BlockLineHeight" Text="Tweet" TextAlignment="Left" TextWrapping="Wrap" Margin="5,-3,0,0" Grid.ColumnSpan="2" Grid.Column="1" VerticalAlignment="Center"/>
+  					 <TextBlock TextDecorations="None" Grid.ColumnSpan="2"><Run Text=""/><InlineUIContainer>
+                      <ContentPresenter />
+                    </InlineUIContainer></TextBlock>					
+					</Grid>
+					
+  					<ControlTemplate.Triggers>
+  						<Trigger Property="IsKeyboardFocused" Value="true"/>
+  						<Trigger Property="IsChecked" Value="true">
+  							<Setter Property="Visibility" TargetName="Shape7" Value="Visible"/>
+  							<Setter Property="Visibility" TargetName="Shape_27" Value="Collapsed"/>
+  							<Setter Property="Visibility" TargetName="Tweet" Value="Collapsed"/>
+  							<Setter Property="Visibility" TargetName="Shape_2_copy_9" Value="Collapsed"/>
+  						</Trigger>
+  					</ControlTemplate.Triggers>
+  				</ControlTemplate>
+  			</Setter.Value>
+  		</Setter>
+  	</Style>
+
+
+  </UserControl.Resources>
+
+  <UserControl.CommandBindings>
+    <CommandBinding Command="{x:Static local:TOBCommands.SaveSearchCommand}" x:Name="CommandSaveSearchCommand" CanExecute="CommandSaveSearchCommand_CanExecute" Executed="CommandSaveSearchCommand_Executed"/>
+  </UserControl.CommandBindings>
+
+  <UserControl.Triggers>
+    <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="btnTweet">
+      <BeginStoryboard Storyboard="{StaticResource OnTweetButtonChecked}"/>
+    </EventTrigger>
+  	<EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="btnTweet">
+  		<BeginStoryboard x:Name="TweetsCollapseStoryBoard_BeginStoryboard1" Storyboard="{StaticResource TweetsCollapseStoryBoard}"/>
+  	</EventTrigger>
+    <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnCancel">
+      <BeginStoryboard x:Name="OnClick2_BeginStoryboard" Storyboard="{StaticResource TweetsCollapseStoryBoard}"/>
+    </EventTrigger>
+    <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnSendTweets"/>
+    <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="image"/>
+  </UserControl.Triggers>
+
+  <StackPanel>
+    <Border  Height="Auto" BorderThickness="1,1,1,0" CornerRadius="5,5,0,0" MouseDown="Window_MouseDown">
+      <Border.BorderBrush>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="#FF611725" Offset="1"/>
+          <GradientStop Color="#FFEBBEC5"/>
+        </LinearGradientBrush>
+      </Border.BorderBrush>
+      <Border.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="#FFB78071" Offset="0"/>
+          <GradientStop Color="#FF692B12" Offset="1"/>
+          <GradientStop Color="#FF340B00" Offset="0.472"/>
+          <GradientStop Color="#FF683526" Offset="0.399"/>
+          <GradientStop Color="#FF300E03" Offset="0.996"/>
+          <GradientStop Color="#FF2F0D02" Offset="1"/>
+          <GradientStop Color="#FF2F0D02" Offset="0.996"/>
+          <GradientStop Color="#FF2F0D02" Offset="1"/>
+          <GradientStop Color="#FF2F0D02" Offset="1"/>
+          <GradientStop Color="#FF2F0D02" Offset="1"/>
+        </LinearGradientBrush>
+      </Border.Background>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel VerticalAlignment="Top" Width="335"  HorizontalAlignment="Left" Margin="0" Grid.ColumnSpan="2">
+          <StackPanel Orientation="Horizontal" Margin="0">
+            <Image Source="/Images/toblogo.png" Height="38" Width="146" HorizontalAlignment="Left" Margin="5,10,0,0"/>
+            <custom:DropDownButton Margin="125,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Height="18" VerticalAlignment="Top" ToolTip="Settings">
+              <custom:DropDownButton.DropDown>
+                <ContextMenu>
+                  <MenuItem Header="Accounts" Click="AccountClick"/>
+                </ContextMenu>
+              </custom:DropDownButton.DropDown>
+              <custom:DropDownButton.Template>
+                <ControlTemplate TargetType="{x:Type custom:DropDownButton}">
+                  <TextBlock TextDecorations="None" ><InlineUIContainer>
+                      <ContentPresenter/>
+                    </InlineUIContainer></TextBlock>
+                </ControlTemplate>
+              </custom:DropDownButton.Template>
+              <Image x:Name="image" Source="/Images/gear1.png" Width="14" Height="14" Margin="-14,5,-10,0" />
+            </custom:DropDownButton>
+
+            <Button x:Name="btnMInimise" Visibility="Collapsed" Width="20" Height="18" Margin="0,5,0,0" Template="{DynamicResource CloseButtonControlTemplate}" FontFamily="Wide Latin" FontWeight="Bold" FontSize="13.333" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnMInimise_Click" >
+              <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                  <Setter Property="Foreground" Value="#FF666563" />
+                  <Setter Property="FontWeight" Value="Bold" />
+                  <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                      <Setter Property="Foreground" Value="#FF0F3F92" />
+                    </Trigger>
+                  </Style.Triggers>
+                </Style>
+              </Button.Style>
+              <Button.ToolTip>
+                <TextBlock Text="Minimize"/>
+              </Button.ToolTip>
+              <Path x:Name="_2_points_" Width="9" Height="5" Stretch="Fill" StrokeThickness="2" StrokeLineJoin="Round" Stroke="#FF666563" Data="F1 M 0.333313,0.666687L 3,0.666687" Fill="#FF666563" RenderTransformOrigin="0.5,0.75" VerticalAlignment="Bottom" Margin="0,8,0,-4"/>
+            </Button>
+            <Button Margin="4,-15,-5,0" Style="{DynamicResource MinimizeNewButtonStyle}" Width="22.03" Height="31"  Click="btnMInimise_Click" ToolTip="Minimize" />
+            <Button Margin="4,-20,0,0" Style="{DynamicResource CloseNewButtonStyle}" Width="22.03" Height="31" Click="btnClose_Click" ToolTip="Close"/>
+            <Button x:Name="btnClose" Visibility="Collapsed" Content="X" Width="20" Height="18" Margin="0,5,3,0" Template="{DynamicResource CloseButtonControlTemplate}" FontFamily="Tahoma" FontWeight="Bold" FontSize="13.333" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+              <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                  <Setter Property="Foreground" Value="#FF666563" />
+                  <Setter Property="FontWeight" Value="Bold" />
+                  <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                      <Setter Property="Foreground" Value="#FF0F3F92" />
+                    </Trigger>
+                  </Style.Triggers>
+                </Style>
+              </Button.Style>
+              <Button.ToolTip>
+                <TextBlock Text="Close"/>
+              </Button.ToolTip>
+            </Button>
+          </StackPanel>
+        </DockPanel>
+
+      </Grid>
+    </Border>
+
+    <Border Height="Auto" Margin="0,0,0,5" BorderThickness="1,0,1,1"  Width="335" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="0,0,5,5" Padding="0,0,0,5" >
+      <Border.BorderBrush>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="#FF2C010E" Offset="0"/>
+          <GradientStop Color="#FF7F3146" Offset="1"/>
+        </LinearGradientBrush>
+      </Border.BorderBrush>
+      <Border.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="#FF330C00" Offset="0"/>
+          <GradientStop Color="#FF6A2B12" Offset="1"/>
+        </LinearGradientBrush>
+      </Border.Background>
+      <StackPanel>
+        <TextBlock x:Name="tbtweetMessage" Text="Sending Tweets.." HorizontalAlignment="Center" Visibility="Hidden" />
+
+        <DockPanel Height="26" Width="320" >
+          <Canvas x:Name="Tweet_mail" Width="81" Height="27" Canvas.Left="7" Canvas.Top="61">
+            <!--<Image x:Name="Shape_27" Width="81" Height="27" Canvas.Left="0" Canvas.Top="0" Source="\Images\Bg_toggletweet.png"/>-->
+            <!--<TextBlock x:Name="Tweet" Canvas.Left="39" Canvas.Top="10" FontFamily="Tahoma" FontSize="11.5" Foreground="#FFFFFFFF" IsHyphenationEnabled="True" LineHeight="11" LineStackingStrategy="BlockLineHeight" Text="Tweet" TextAlignment="Left" TextWrapping="Wrap" Margin="-5,-3,0,0"/>
+            <Image x:Name="Shape_2_copy_9" Width="22" Height="19" Canvas.Left="13" Canvas.Top="7" Source="\Images\Bg_toggleMsg.png" Margin="-5,-4,0,0" VerticalAlignment="Bottom"/>-->
+          	<ToggleButton x:Name="btnTweet"  Width="80" Margin="0" VerticalAlignment="Top" Height="27" Style="{DynamicResource TweetToggleButtonStyle}" />
+            <!--<Image x:Name="Shape7" Width="81" Height="27" Canvas.Left="0" Canvas.Top="0" Source="\Images\bg_tweetwyt.png" Visibility="Collapsed"/>-->
+          </Canvas>
+
+          <custom:SearchTextBox x:Name="txtSearchBox" Margin="6,0,0,4"  Style="{DynamicResource rbnPatSearchInfoTextBoxStyle}" Height="22" KeyUp="txtSearchBox_KeyUp"   />
+        </DockPanel>
+        <Grid Margin="0" Width="320" HorizontalAlignment="Center">
+          <Border x:Name="borderTweetText" CornerRadius="0,3,3,3"  BorderBrush="#FF819395" Background="White" Width="320" Focusable="false"   HorizontalAlignment="Left" VerticalAlignment="Top"   >
+            <Border.RenderTransform>
+              <TransformGroup>
+                <ScaleTransform ScaleY="1"/>
+                <SkewTransform/>
+                <RotateTransform/>
+                <TranslateTransform/>
+              </TransformGroup>
+            </Border.RenderTransform>
+            <Border.LayoutTransform>
+              <TransformGroup>
+                <ScaleTransform ScaleY="0"/>
+                <SkewTransform/>
+                <RotateTransform/>
+                <TranslateTransform/>
+              </TransformGroup>
+            </Border.LayoutTransform>
+            <StackPanel>
+              <Border>
+                <StackPanel Orientation="Horizontal">
+                  <Border Width="78">
+                    <TextBlock Grid.Column="0" Text="Send using: " Margin="8,8,0,3"  Grid.ColumnSpan="2" Foreground="#FF464646" FontFamily="Tahoma" FontSize="10.667"/>
+                  </Border>
+                  <Border BorderThickness="0,1,0,0" BorderBrush="#FF819395" CornerRadius="0,3,3,3" Width="245" HorizontalAlignment="Left" Margin="2,0,0,0">
+                    <ListBox Grid.Column="1"  x:Name="listAccountNames" ItemContainerStyle="{DynamicResource SimpleListBoxItem}" ItemTemplate="{StaticResource AccountlistBoxTemplate}" ItemsSource="{Binding}"  VerticalAlignment="Bottom" Grid.ColumnSpan="2" SelectionMode="Multiple" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}" SelectedIndex="0" FontFamily="Tahoma" FontSize="10.667" Foreground="#FF464646" Margin="0" HorizontalAlignment="Left">
+                      <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel  Orientation="Horizontal" Width="200" />
+                        </ItemsPanelTemplate>
+                      </ListBox.ItemsPanel>
+                    </ListBox>
+                  </Border>
+                </StackPanel>
+              </Border>
+              <Border Margin="5,2,5,0">
+                <StackPanel>
+                  <Border>
+                    <Grid >
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.225*"/>
+                        <ColumnDefinition Width="0.775*"/>
+                      </Grid.ColumnDefinitions>
+                    </Grid>
+                  </Border>
+                  <Border Background="White" BorderThickness="1" BorderBrush="#FF909090" Margin="0,3,0,3">
+                    <StackPanel>
+                      <custom:TweetOTextBox  x:Name="txtTweets" Height="50" AcceptsReturn="True" KeyUp="txtTweets_KeyUp" BorderThickness="0" TextWrapping="Wrap" MaxLines="10" ShortenUrl="{Binding IsChecked, ElementName=chkShortenUrl, Mode=OneWay, UpdateSourceTrigger=Default}" Template="{DynamicResource TweetOTextBoxControlTemplate}" Margin="0,2,0,0"   />
+                      <CheckBox x:Name="chkShortenUrl" Content="Auto shorten url?" FontFamily="Tahoma" FontSize="10.667" Margin="5,3,2,3" Foreground="#FF6A6A6B" HorizontalAlignment="Right" IsChecked="True" Style="{DynamicResource CheckBoxStyle}" />
+                    </StackPanel>
+                  </Border>
+
+
+                </StackPanel>
+              </Border>
+
+              <Path Fill="#FFE5E5E5" Stretch="Fill" Stroke="#FF909090" Margin="5,2,7,0" Height="0.5" Data="M5,98.04 L364,98.04"/>
+              <Border Margin="0,5,5,5" Height="20">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0,0,0">
+                  <Border Background="#FFD8E4E7" BorderThickness="0,0,65,0" CornerRadius="3" >
+                    <TextBlock x:Name="tbTextCount"  Foreground="#FF334D52" Text="{Binding Text, Converter={StaticResource TweetTextCount}, ElementName=txtTweets, Mode=Default}" HorizontalAlignment="Left" Margin="5,3,5,0" FontFamily="Tahoma" FontSize="10.667" Width="20"/>
+                  </Border>
+                  <Button x:Name="btnSharePicture" Content="Share a Picture"  HorizontalAlignment="Right" Margin="0,0,5,0" Click="btnSharePicture_Click" Template="{DynamicResource MainWindowButtonTemplate}" Background="{DynamicResource DarkButtonsBrush}" Height="18" />
+                  <Button x:Name="btnSendTweets" Content="Update" Width="60" HorizontalAlignment="Right" Margin="0,0,5,0" Click="btnSendTweets_Click" Template="{DynamicResource MainWindowButtonTemplate}" IsEnabled="{Binding HasText, ElementName=txtTweets, Mode=Default}" Height="18" />
+                  <Button x:Name="btnCancel" Content="Cancel" Width="60" HorizontalAlignment="Right" Margin="0,0,5,0" Template="{DynamicResource MainWindowButtonTemplate}" Click="btnCancel_Click" Height="18" FontSize="10.667" />
+                </StackPanel>
+              </Border>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </StackPanel>
+    </Border>
+
+  </StackPanel>
+</UserControl>

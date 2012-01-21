@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="TOBKPI" xmlns="http://schemas.microsoft.com/linqtosql/mapping/2007">
+  <Table Name="dbo.TOBClientRegistration" Member="TOBClientRegistrations">
+    <Type Name="TOBKPI.BLL.TOBClientRegistration">
+      <Column Name="RegistrationId" Member="RegistrationId" Storage="_RegistrationId" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" />
+      <Column Name="RegistrationDate" Member="RegistrationDate" Storage="_RegistrationDate" DbType="DateTime NOT NULL" />
+      <Association Name="FK_TOBClientTimeTracker_TOBClientRegistration" Member="TOBClientTimeTrackers" Storage="_TOBClientTimeTrackers" ThisKey="RegistrationId" OtherKey="RegisterationId" DeleteRule="NO ACTION" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TOBClientTimeTracker" Member="TOBClientTimeTrackers">
+    <Type Name="TOBKPI.BLL.TOBClientTimeTracker">
+      <Column Name="Id" Member="Id" Storage="_Id" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="RegisterationId" Member="RegisterationId" Storage="_RegisterationId" DbType="UniqueIdentifier NOT NULL" />
+      <Column Name="TOBStartTime" Member="TOBStartTime" Storage="_TOBStartTime" DbType="DateTime" />
+      <Column Name="TOBEndTime" Member="TOBEndTime" Storage="_TOBEndTime" DbType="DateTime" />
+      <Column Name="Duration" Member="Duration" Storage="_Duration" DbType="BigInt" />
+      <Association Name="FK_TOBClientTimeTracker_TOBClientRegistration" Member="TOBClientRegistration" Storage="_TOBClientRegistration" ThisKey="RegisterationId" OtherKey="RegistrationId" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

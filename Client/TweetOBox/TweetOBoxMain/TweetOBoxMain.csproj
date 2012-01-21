@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{34C562C4-8FE4-401A-BCFA-F5474A856785}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TweetOBoxMain</RootNamespace>
+    <AssemblyName>TweetOBoxMain</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
+    <ManifestCertificateThumbprint>97FC3FB0513C0ADBC6A9FA03849BE22A2E8D13B4</ManifestCertificateThumbprint>
+    <ManifestKeyFile>TweetOBoxMain_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <ApplicationIcon>Images\tob.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <PublishUrl>ftp://ftp.tweetobox.com/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://www.tweetobox.com/</InstallUrl>
+    <SupportUrl>http://www.tweetobox.com</SupportUrl>
+    <ProductName>TweetOBox</ProductName>
+    <PublisherName>TweetOBox</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>66</ApplicationRevision>
+    <ApplicationVersion>0.0.5.%2a</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsUrl>http://localhost/TweetOBox/dotnetfx</BootstrapperComponentsUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hammock.ClientProfile">
+      <HintPath>..\..\TweetSharp\Hammock.ClientProfile.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TweetSharp">
+      <HintPath>..\..\TweetSharp\TweetSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Notifications\NotifyBaloon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ButtonStyleresource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\NotifyIconResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StyleResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\TemplateResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TweetOBoxAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TweetOBoxMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AccountInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AccountSelectorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\TweetsTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\PanelSelectorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserAllTweets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserProfileDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserTweets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TweetOBoxMain.xaml.cs">
+      <DependentUpon>TweetOBoxMain.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClientKUI.cs" />
+    <Compile Include="Commands.cs" />
+    <Compile Include="Controller\StatusPanelController.cs" />
+    <Compile Include="CustomControls\DropDownMenu.cs" />
+    <Compile Include="CustomControls\SearchTextBox.cs" />
+    <Compile Include="CustomControls\TweetOTextBox.cs" />
+    <Compile Include="Model\DirectMessageCollection.cs" />
+    <Compile Include="Model\PluginSelector.cs" />
+    <Compile Include="Model\PanelSelector.cs" />
+    <Compile Include="Notifications\Interop\NotifyEnums.cs" />
+    <Compile Include="Notifications\Interop\Point.cs" />
+    <Compile Include="Notifications\Interop\TrayInfo.cs" />
+    <Compile Include="Notifications\Interop\WinApi.cs" />
+    <Compile Include="Notifications\Interop\WindowClass.cs" />
+    <Compile Include="Notifications\Interop\WindowMessageSink.cs" />
+    <Compile Include="Notifications\ListBase.cs" />
+    <Compile Include="Notifications\ListPager.cs" />
+    <Compile Include="Notifications\NotifyBaloon.xaml.cs">
+      <DependentUpon>NotifyBaloon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\PopupActivationMode.cs" />
+    <Compile Include="Notifications\RoutedEventHelper.cs" />
+    <Compile Include="Notifications\TaskbarIcon.cs" />
+    <Compile Include="Notifications\TaskbarIcon.Declarations.cs" />
+    <Compile Include="Notifications\UIListPager.cs" />
+    <Compile Include="Notifications\Util.cs" />
+    <Compile Include="Notifications\Utils.cs" />
+    <Compile Include="NotifyCommands\CommandBase.cs" />
+    <Compile Include="NotifyCommands\OpenTOBWindow.cs" />
+    <Compile Include="NotifyCommands\QuitTOBWindow.cs" />
+    <Compile Include="PluginManager.cs" />
+    <Compile Include="Service References\TOBKUIService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AccountInfo.xaml.cs">
+      <DependentUpon>AccountInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AccountSelectorControl.xaml.cs">
+      <DependentUpon>AccountSelectorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TweetsTemplate.xaml.cs">
+      <DependentUpon>TweetsTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PanelSelectorControl.xaml.cs">
+      <DependentUpon>PanelSelectorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserAllTweets.xaml.cs">
+      <DependentUpon>UserAllTweets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserProfileDetails.xaml.cs">
+      <DependentUpon>UserProfileDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserTweets.xaml.cs">
+      <DependentUpon>UserTweets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\BindableRun.cs" />
+    <Compile Include="Utility\BoolORConverter.cs" />
+    <Compile Include="Utility\ColorConverter.cs" />
+    <Compile Include="Utility\DateConverter.cs" />
+    <Compile Include="Utility\DirectMessageUrlConverter.cs" />
+    <Compile Include="Utility\FollowConverter.cs" />
+    <Compile Include="Utility\FollowingConverter.cs" />
+    <Compile Include="Utility\GlobalSearchProviderType.cs" />
+    <Compile Include="Utility\MessageNotifier.cs" />
+    <Compile Include="Utility\PanelNamesConverter.cs" />
+    <Compile Include="Utility\ProfileTweetsTextConverter.cs" />
+    <Compile Include="Utility\SortableObservableCollection.cs" />
+    <Compile Include="Utility\SouceUrlConverter.cs" />
+    <Compile Include="Utility\StreamNamesConverter.cs" />
+    <Compile Include="Utility\TagsLinkConverter.cs" />
+    <Compile Include="Utility\TweetActionArgs.cs" />
+    <Compile Include="Utility\TweetActionsVisibilityConverter.cs" />
+    <Compile Include="Utility\TweetsBgColorConverter.cs" />
+    <Compile Include="Utility\TweetsFontsConverter.cs" />
+    <Compile Include="Utility\TweetsLengthConverter.cs" />
+    <Compile Include="Utility\TweetSourceConverter.cs" />
+    <Compile Include="Utility\TweetsTemplateSelector.cs" />
+    <Compile Include="Utility\TweetsTextBlock.cs" />
+    <Compile Include="Utility\TweetTextCount.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TweetOBoxAccount.xaml.cs">
+      <DependentUpon>TweetOBoxAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\TwitterStatusUrl.cs" />
+    <Compile Include="Utility\UnreadTweetsConverter.cs" />
+    <Compile Include="Utility\UserProfileArgs.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TOBKUIService\Service.xsd" />
+    <None Include="Service References\TOBKUIService\Service1.xsd" />
+    <None Include="Service References\TOBKUIService\TOBKUIService.wsdl" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\TweetOBoxDb.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugins\TOBPlugin.PictureHelper.dll" />
+    <Content Include="Plugins\TOBPlugin.TweetStats.dll" />
+    <Content Include="Plugins\TOBPlugin.WebPreview.dll" />
+    <None Include="Service References\TOBKUIService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TOBKUIService\configuration.svcinfo" />
+    <None Include="Service References\TOBKUIService\configuration91.svcinfo" />
+    <None Include="Service References\TOBKUIService\Service.disco" />
+    <Resource Include="Images\bg_notifilg.png" />
+    <Resource Include="Images\edit_Ic.png" />
+    <Resource Include="Images\twitter-ic.ico" />
+    <Resource Include="Images\mini1.png" />
+    <Resource Include="Images\gear1.png" />
+    <Resource Include="Images\close2.png" />
+    <Resource Include="Images\gear2.png" />
+    <Resource Include="Images\mini2.png" />
+    <Resource Include="Images\unfollow.png" />
+    <Resource Include="Images\splashBg.png" />
+    <Resource Include="Images\Ic_moreaction.png" />
+    <Resource Include="Images\people-search.png" />
+    <Resource Include="Images\tweets-search.png" />
+    <Resource Include="Images\tob.ico" />
+    <Resource Include="Images\tweetsBg.png" />
+    <Resource Include="Images\tools-icon.png" />
+    <Resource Include="Images\topbg.png" />
+    <Resource Include="Images\mailIc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TOB.BLL\TOB.BLL.csproj">
+      <Project>{88668E24-02E6-432F-B85C-561676CD68B8}</Project>
+      <Name>TOB.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TOB.Entities\TOB.Entities.csproj">
+      <Project>{539753DC-CBC7-4335-B694-9F37C24ED435}</Project>
+      <Name>TOB.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TOB.Logger\TOB.Logger.csproj">
+      <Project>{D4D981CD-3C26-4601-B9B4-45354A5F6947}</Project>
+      <Name>TOB.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TOB.Plugin\TOB.Plugin.csproj">
+      <Project>{68739E07-F491-4252-82EC-F0D27BBED8C4}</Project>
+      <Name>TOB.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TOB.TweetSharpWrap\TOB.TweetSharpWrap.csproj">
+      <Project>{71BDC41C-B745-4470-BBA2-0271084FD9D5}</Project>
+      <Name>TOB.TweetSharpWrap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TOB.Utility\TOB.Utility.csproj">
+      <Project>{C860DF5E-64F8-4694-ABEF-3C7E9084B255}</Project>
+      <Name>TOB.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\accountHeader.png" />
+    <Resource Include="Images\bgimagetop.png" />
+    <Resource Include="Images\bgimagtop.png" />
+    <Resource Include="Images\Bg_accounttop.png" />
+    <Resource Include="Images\bg_scroll.png" />
+    <Resource Include="Images\bg_scrollBtm.png" />
+    <Resource Include="Images\Bg_sidebtm.png" />
+    <Resource Include="Images\Bg_sidemid.png" />
+    <Resource Include="Images\Bg_sidetop.png" />
+    <Resource Include="Images\Bg_toggleMsg.png" />
+    <Resource Include="Images\Bg_toggletweet.png" />
+    <Resource Include="Images\bg_top.png" />
+    <Resource Include="Images\Bg_tweetbird.png" />
+    <Resource Include="Images\bg_tweetBtm.png" />
+    <Resource Include="Images\bg_tweetlgAcc.png" />
+    <Resource Include="Images\bg_Tweets.png" />
+    <Resource Include="Images\bg_tweetTop.png" />
+    <Resource Include="Images\bg_tweetwyt.png" />
+    <Resource Include="Images\check.png" />
+    <Resource Include="Images\close-filter.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\deletecontact.png" />
+    <Resource Include="Images\direct-msg.png" />
+    <Resource Include="Images\direct_msgover.png" />
+    <Resource Include="Images\downarrow.png" />
+    <Resource Include="Images\Error.ico" />
+    <Resource Include="Images\filter.png" />
+    <Resource Include="Images\Ic-close.png" />
+    <Resource Include="Images\Ic-Minimize.png" />
+    <Resource Include="Images\Ic-Setting.png" />
+    <Resource Include="Images\IcLogo_Tweet.png" />
+    <Resource Include="Images\IcLogo_Tweets.png" />
+    <Resource Include="Images\ict_refresh.png" />
+    <Resource Include="Images\Ic_accclose.png" />
+    <Resource Include="Images\Ic_acctick.png" />
+    <Resource Include="Images\Ic_addnormal.png" />
+    <Resource Include="Images\Ic_addover.png" />
+    <Resource Include="Images\Ic_clear.png" />
+    <Resource Include="Images\Ic_ClearBg.png" />
+    <Resource Include="Images\Ic_devider.png" />
+    <Resource Include="Images\Ic_DirectMsg.png" />
+    <Resource Include="Images\Ic_directmsgBg.png" />
+    <Resource Include="Images\Ic_dmnormal.png" />
+    <Resource Include="Images\Ic_dmover.png" />
+    <Resource Include="Images\Ic_Filter.png" />
+    <Resource Include="Images\Ic_filterup.png" />
+    <Resource Include="Images\Ic_follow.png" />
+    <Resource Include="Images\Ic_followclose.png" />
+    <Resource Include="Images\Ic_follower.png" />
+    <Resource Include="Images\Ic_gpedit.png" />
+    <Resource Include="Images\Ic_Logotweet.png" />
+    <Resource Include="Images\Ic_markasread.png" />
+    <Resource Include="Images\Ic_minimize.png" />
+    <Resource Include="Images\Ic_more.png" />
+    <Resource Include="Images\Ic_mrnormal.png" />
+    <Resource Include="Images\Ic_mrover.png" />
+    <Resource Include="Images\Ic_newdirectmsg.png" />
+    <Resource Include="Images\Ic_newReply.png" />
+    <Resource Include="Images\Ic_newRetweet.png" />
+    <Resource Include="Images\Ic_notifyLogo.png" />
+    <Resource Include="Images\Ic_ovedirectmsg.png" />
+    <Resource Include="Images\Ic_overmore.png" />
+    <Resource Include="Images\Ic_overreply.png" />
+    <Resource Include="Images\Ic_overretweet.png" />
+    <Resource Include="Images\Ic_play.png" />
+    <Resource Include="Images\Ic_playback.png" />
+    <Resource Include="Images\Ic_refresh.png" />
+    <Resource Include="Images\Ic_replay.png" />
+    <Resource Include="Images\Ic_replyBg.png" />
+    <Resource Include="Images\Ic_retweet.png" />
+    <Resource Include="Images\Ic_retweetBg.png" />
+    <Resource Include="Images\Ic_rpnormal.png" />
+    <Resource Include="Images\Ic_rpover.png" />
+    <Resource Include="Images\Ic_rtnormal.png" />
+    <Resource Include="Images\Ic_rtover.png" />
+    <Resource Include="Images\Ic_ScrollBg.png" />
+    <Resource Include="Images\Ic_search.png" />
+    <Resource Include="Images\Ic_settings.png" />
+    <Resource Include="Images\Ic_Shadelogo.png" />
+    <Resource Include="Images\Ic_sidearrow.png" />
+    <Resource Include="Images\Ic_tweetoboxlg.gif" />
+    <Resource Include="Images\Ic_twitter.png" />
+    <Resource Include="Images\logobird.png" />
+    <Resource Include="Images\logo_tweets.png" />
+    <Resource Include="Images\mailTweet.png" />
+    <Resource Include="Images\play.png" />
+    <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\replay.png" />
+    <Resource Include="Images\replayover.png" />
+    <Resource Include="Images\retweet-msg.png" />
+    <Resource Include="Images\retweet-over.png" />
+    <Resource Include="Images\savetick.png" />
+    <Resource Include="Images\seperator.png" />
+    <Resource Include="Images\tick.png" />
+    <Resource Include="Images\ToB-Logo-Sample.png" />
+    <Resource Include="Images\toblogo.png" />
+    <Resource Include="Images\Ttwitter.png" />
+    <Resource Include="Images\tweetAddlogo.png" />
+    <Resource Include="Images\tweeter-search.png" />
+    <Resource Include="Images\tweetlogo.png" />
+    <Resource Include="Images\tweetlogo5.png" />
+    <Resource Include="Images\tweetmailIc.png" />
+    <Resource Include="Images\tweetSidelogo.png" />
+    <Resource Include="Images\tweetSidelogo2.png" />
+    <Resource Include="Images\twitterlogo.png" />
+    <Resource Include="Images\twitterlogo2.png" />
+    <Resource Include="Images\windowIc.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TOBKUIService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Plugins\TOBPlugin.PictureHelper.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Plugins\TOBPlugin.TweetStats.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Plugins\TOBPlugin.WebPreview.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>xcopy /DY $(TargetDir)\Plugins\*.dll $(SolutionDir)\TweetOBoxMain\Plugins</PostBuildEvent>
+  </PropertyGroup>
+</Project>

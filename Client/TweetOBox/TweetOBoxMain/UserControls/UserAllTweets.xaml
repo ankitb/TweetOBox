@@ -1,0 +1,608 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="TweetOBoxMain.UserControls.UserAllTweets"
+	xmlns:TweetOBoxMain_Utility="clr-namespace:TweetOBoxMain.Utility"
+    xmlns:TOBUtility="clr-namespace:TOB.Utility"
+    xmlns:local="clr-namespace:TweetOBoxMain"
+    xmlns:notify="clr-namespace:TweetOBoxMain.Notifications"
+    Height="Auto" Width="335" x:Name="userAllTweets"  Margin="0,0,0,15">
+
+  <UserControl.Resources>  	
+  	<TweetOBoxMain_Utility:FollowingConverter x:Key="FollowingConverter"/>
+    <TweetOBoxMain_Utility:ProfileTweetsTextConverter x:Key="ProfileTweetsTextConverter"/>
+  	<TweetOBoxMain_Utility:TweetsBgColorConverter x:Key="TweetsBgColorConverter"/>
+    <TweetOBoxMain_Utility:TweetsFontsConverter x:Key="TweetsFontsConverter"/>
+    <TweetOBoxMain_Utility:UnreadTweetsConverter x:Key="UnreadTweetsConverter"/>
+    <TweetOBoxMain_Utility:DirectMessageUrlConverter x:Key="DirectMessageUrlConverter"/>      
+    <TweetOBoxMain_Utility:TweetActionsVisibilityConverter x:Key="TweetActionsVisibilityConverterDataSource" />
+    <TweetOBoxMain_Utility:TweetActionsVisibilityConverter x:Key="TweetActionsVisibilityConverter"/>
+    <TweetOBoxMain_Utility:SouceUrlConverter x:Key="SouceUrlConverter"/>
+    <TweetOBoxMain_Utility:TweetSourceConverter x:Key="TweetSourceConverter"/>
+    <TweetOBoxMain_Utility:TwitterStatusUrl x:Key="TwitterStatusUrl"/>
+    <TweetOBoxMain_Utility:DateConverter x:Key="DateConverter"/>
+    <TweetOBoxMain_Utility:TagsLinkConverter x:Key="TagsLinkConverter"/>
+    <TweetOBoxMain_Utility:BoolORConverter x:Key="BoolORConverter"/>
+    <TweetOBoxMain_Utility:FollowConverter x:Key="FollowConverter"/>
+	 <TweetOBoxMain_Utility:TweetsTemplateSelector x:Key="TweetsTemplateSelector"/>
+    <DataTemplate x:Key="TweetsControlsDataTemplate">
+      <local:TweetsTemplate Width="Auto" Height="Auto" Margin="4,0,0,0"/>
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="SavedSearchDataTemplate">
+      <Grid x:Name="LayoutRoot" Margin="6,0,0,0">
+        <Border x:Name="bdTweetSearch" CornerRadius="4" BorderThickness="1" BorderBrush="#FFBBBCBC" Background="White">
+          <StackPanel Width="300" Height="Auto" Margin="0,0,0,5">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.221*"/>
+                <RowDefinition Height="0.18*"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.221*"/>
+                <ColumnDefinition Width="0.779*"/>
+              </Grid.ColumnDefinitions>
+              <Border Margin="0,7,5,5" Width="45" Height="45" BorderBrush="#FF819497" BorderThickness="1" VerticalAlignment="Top">
+                <!--<Border.BitmapEffect>
+                  <OuterGlowBitmapEffect GlowColor="#FFc2c2c2" GlowSize="3" Opacity="0.5" />
+                </Border.BitmapEffect>-->
+                <Image Source="{Binding ProfileImageUrl}" VerticalAlignment="Top"/>
+              </Border>
+
+              <WrapPanel Grid.Column="1" Margin="0,5,8,0">
+                <TweetOBoxMain_Utility:TweetsTextBlock TextWrapping="Wrap" InlineCollection="{Binding Converter={StaticResource TagsLinkConverter}}"/>
+              </WrapPanel>
+
+                            <Button x:Name="btnDismissUIObj" ToolTip="Dismiss Message"  Visibility="Hidden" IsEnabled="False" Margin="0,-2,-6,0" HorizontalAlignment="Right" Grid.Column="2" Command="local:TOBCommands.DismissUIObject" CommandParameter="{Binding}" Template="{DynamicResource DeleteButtonControlTemplate}" VerticalAlignment="Top" Cursor="Hand" Content="X"/>
+
+                            <!--<StackPanel Width="120" Margin="5,0,0,0">
+                          <TextBlock Text="User" Margin="0,0,0,3" FontWeight="Bold" Foreground="#FF063189" FontSize="10.667" />
+
+                          <Button Content="UnFollow" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.UnFollowUser" CommandParameter="{Binding}" />
+                          <Button Content="Add to group" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" />
+                          <Button Content="Remove from group" Width="110" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" />
+                          <Button Content="Block" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.BlockUser" CommandParameter="{Binding}" />
+                          <Button Content="Report Spam" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.ReportSpamUser" CommandParameter="{Binding}"/>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Width="82">
+                          <TextBlock Text="Tweet" Grid.Column="1" Margin="0,0,0,3" FontWeight="Bold" Foreground="#FF063189" FontSize="10.667" />
+                          <Button x:Name="btnReply" Content="Reply" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.ReplyTweet" CommandParameter="{Binding}" Cursor="Hand" />
+                          <Button x:Name="btnTweetDelete" Content="Delete" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.DeleteDirectMessages" CommandParameter="{Binding}" Cursor="Hand"/>
+                        </StackPanel>
+                      </Grid>
+
+                    </Border>
+                  </Popup>
+                </StackPanel>
+              </StackPanel>
+             <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10,0,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" >
+                <TextBlock Text="Recieved on" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" Margin="0" />
+                <TextBlock Text="{Binding Account.Username, Mode=Default}" FontFamily="Tahoma" FontSize="10" Foreground="#FF043D72" Margin="5,0,0,0" VerticalAlignment="Center" />
+              </StackPanel>-->
+              <StackPanel Grid.Row="1" Height="20" Grid.ColumnSpan="2" Margin="5,0,0,3" Visibility="Collapsed">
+                <TextBlock Text="{Binding FromUserScreenName}"/>
+              </StackPanel>
+            </Grid>
+          </StackPanel>
+
+        </Border>
+      </Grid>
+      <DataTemplate.Triggers>
+        <Trigger Property="IsMouseOver" Value="True" SourceName="bdTweetSearch">
+          <Setter Property="Background" TargetName="bdTweetSearch">
+            <Setter.Value>
+              <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFe8e8e8" Offset="0"/>
+                <GradientStop Color="#FFd4d4d4" Offset="1"/>
+              </LinearGradientBrush>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DirectMessageDataTemplate">
+      <DataTemplate.Resources>
+        <Storyboard x:Key="DirectMessageMouseEnter">
+          <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border1" Storyboard.TargetProperty="(FrameworkElement.Width)">
+            <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="35"/>
+          </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DirectMsgMouseLeave">
+          <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="border1" Storyboard.TargetProperty="(FrameworkElement.Width)">
+            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+          </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+      </DataTemplate.Resources>
+      <Grid x:Name="LayoutRoot" Margin="6,0,0,0">
+      	<Grid x:Name="grid" Background="#02FFFFFF" MouseEnter="grid_MouseEnter" MouseLeave="grid_MouseLeave">
+
+      		<Border x:Name="borderBg" CornerRadius="4" BorderThickness="1" BorderBrush="#FFBBBCBC" Background="{Binding IsRead, Converter={StaticResource TweetsBgColorConverter}, Mode=Default}" />
+      		<Border x:Name="borderDirectMessages" CornerRadius="4" BorderThickness="1" BorderBrush="#FFBBBCBC" Opacity="0.005" >
+				<Border.Background>
+  			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+  				<GradientStop Color="White" Offset="0"/>
+  				<GradientStop Color="White" Offset="1"/>
+  			</LinearGradientBrush>
+  		</Border.Background>
+			</Border>
+      		<StackPanel Height="Auto" Margin="1,1,-1,-1">
+      			<Grid Margin="5,0,0,0">
+      				<Grid.RowDefinitions>
+      					<RowDefinition Height="0.6*"/>
+      					<RowDefinition Height="0.221*"/>
+      					<RowDefinition Height="0.18*"/>
+      				</Grid.RowDefinitions>
+      				<Grid.ColumnDefinitions>
+      					<ColumnDefinition Width="0.221*"/>
+      					<ColumnDefinition Width="0.655*"/>
+      					<ColumnDefinition Width="0.124*"/>
+      				</Grid.ColumnDefinitions>
+      				<Border Margin="0,7,12.045,5" Width="45" Height="45" BorderBrush="#FF819497" BorderThickness="1" VerticalAlignment="Top">
+      					<!--<Border.BitmapEffect>
+      						<OuterGlowBitmapEffect GlowColor="#FFc2c2c2" GlowSize="3" Opacity="0.5" />
+      					</Border.BitmapEffect>-->
+      					<Image Source="{Binding UserProfile.ProfileImageUrl}" VerticalAlignment="Top"/>
+      				</Border>
+
+      				<WrapPanel Grid.Column="1" Margin="0,5,8,0" Grid.ColumnSpan="2">
+
+      					<Grid >
+      						<Grid.ColumnDefinitions>
+      							<ColumnDefinition Width="215" />
+      							<ColumnDefinition />
+      						</Grid.ColumnDefinitions>
+      						<TweetOBoxMain_Utility:TweetsTextBlock x:Name="tbdirectMsgText" TextWrapping="Wrap" InlineCollection="{Binding Converter={StaticResource DirectMessageUrlConverter}}" FontWeight="{Binding IsRead, Converter={StaticResource TweetsFontsConverter}}" />
+
+
+      					</Grid>
+
+      				</WrapPanel>
+
+                            <Button x:Name="btnDismissUIObj" ToolTip="Dismiss Message"  Visibility="Hidden" IsEnabled="False" Margin="0,-2,2,0" HorizontalAlignment="Right" Grid.Column="2" Command="local:TOBCommands.DismissUIObject" CommandParameter="{Binding}" Template="{DynamicResource DeleteButtonControlTemplate}" VerticalAlignment="Top" Cursor="Hand" Content="X"/>
+
+
+                            <StackPanel Grid.ColumnSpan="3" Grid.Row="1" Orientation="Horizontal" Margin="0,2,0,0" VerticalAlignment="Top">
+      					<StackPanel Orientation="Horizontal" Width="0">
+      						<!--<Button Style="{DynamicResource ReplyTweetButtonStyle}"  Command="local:TOBCommands.ReplyTweet" CommandParameter="{Binding}" Cursor="Hand" Width="18"/>
+                  <Button Style="{DynamicResource DirectMsgTweetButtonStyle}"  Command="local:TOBCommands.ReTweet"  CommandParameter="{Binding}" Cursor="Hand" Margin="2,0,3,-6" Width="24" HorizontalAlignment="Left"  />
+                  <Button Style="{DynamicResource RetweetTweetButtonStyle}" Command="local:TOBCommands.DirectTweet" CommandParameter="{Binding}" Cursor="Hand" Margin="3,-4,3,-3" />-->
+      					</StackPanel>
+      					<StackPanel Orientation="Horizontal" Width="216" Margin="0,-2,0,0">                
+      						<Button x:Name="btnMore" HorizontalAlignment="Right" Style="{DynamicResource btnMoreStyle}" VerticalAlignment="Bottom" Width="50" Height="15" Content="Button" DataContext="{Binding Mode=OneWay}" Margin="0" Visibility="Collapsed"/>
+      						<StackPanel Margin="5,2,0,2">
+      							<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,8,0,0">
+      								<TextBlock x:Name="textBlock" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" Margin="-15,0,0,0" ><Hyperlink x:Name="hlinkStatus" TargetName="_top" FontFamily="Tahoma" FontSize="10" TextDecorations="None" ><InlineUIContainer>
+      											<TextBlock x:Name="tbDate" Text="{Binding Converter={StaticResource DateConverter}, Mode=OneWay}" Foreground="#FF7a8c58" />
+      										</InlineUIContainer></Hyperlink></TextBlock>
+      								<!--<WrapPanel Width="160">
+                        <TextBlock Text=" via " FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="tbVia" FontFamily="Tahoma" FontSize="10" Foreground="#FF043d72" TextWrapping="Wrap">
+                          <Hyperlink x:Name="hlinkvia" RequestNavigate="HandleLinkClick" TargetName="_top" FontFamily="Tahoma" FontSize="10" Foreground="#FF494949" TextDecorations="None"  >
+                            <InlineUIContainer>
+                              <TextBlock Text="{Binding Source, Converter={StaticResource TweetSourceConverter}}"  Foreground="#FF043d72" />
+                            </InlineUIContainer>
+                          </Hyperlink>
+                        </TextBlock>
+                      </WrapPanel>-->
+      							</StackPanel>
+
+
+      						</StackPanel>
+
+      						<Popup x:Name="PopupTweetActions"
+      							PopupAnimation="None"
+      							AllowsTransparency = "True"   Margin="0,-5,0,0" HorizontalOffset="95" VerticalOffset="-7" >
+      							<Popup.IsOpen>
+      								<MultiBinding Converter="{StaticResource BoolORConverter}">
+      									<Binding Path="IsMouseOver" ElementName="btnMoreActions" Mode="OneWay"/>
+      									<Binding Path="IsMouseOver" ElementName="PopupTweetActions" Mode="OneWay"/>
+      								</MultiBinding>
+      							</Popup.IsOpen>
+      							<Border BorderBrush="#FF682A11"
+      								BorderThickness="2" CornerRadius="8" Width="200"  Background="White">
+      								<Grid Width="Auto" Height="Auto" Margin="5" x:Name="grdOptionsContainer"  >
+      									<Grid.ColumnDefinitions>
+      										<ColumnDefinition Width="0.596*"/>
+      										<ColumnDefinition Width="0.404*"/>
+      									</Grid.ColumnDefinitions>
+      									<StackPanel Width="120" Margin="5,0,0,0">
+      										<TextBlock Text="User" Margin="0,0,0,3" FontWeight="Bold" Foreground="#FF063189" FontSize="10.667" />
+
+      										<Button Content="UnFollow" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.UnFollowUser" CommandParameter="{Binding}" />
+      										<Button Content="Add to group" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.AddToGroupCommand" CommandParameter="{Binding}" />
+      										<Button Content="Remove from group" Width="110" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" />
+      										<Button Content="Block" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.BlockUser" CommandParameter="{Binding}" />
+      										<Button Content="Report Spam" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.ReportSpamUser" CommandParameter="{Binding}"/>
+
+      									</StackPanel>
+      									<StackPanel Grid.Column="1" Width="72">
+      										<TextBlock Text="Tweet" Grid.Column="1" Margin="0,0,0,3" FontWeight="Bold" Foreground="#FF063189" FontSize="10.667" />
+      										<Button x:Name="btnReply" Content="DirectMessage" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.DirectTweet" CommandParameter="{Binding}" Cursor="Hand" />
+      										<Button x:Name="btnTweetDelete" Content="Delete" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.DeleteDirectMessages" CommandParameter="{Binding}" Cursor="Hand"/>
+      									</StackPanel>
+      								</Grid>
+
+      							</Border>
+      						</Popup>
+      					</StackPanel>
+      				</StackPanel>
+      				<StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,4" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+      					<TextBlock Text="Recieved on" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" Margin="0" />
+      					<TextBlock Text="{Binding Account.Username, Mode=Default}" FontFamily="Tahoma" FontSize="10" Foreground="#FF043D72" Margin="5,0,0,0" VerticalAlignment="Center" />
+      				</StackPanel>
+      				<Border x:Name="border1" Grid.Column="2" Grid.RowSpan="3" Width="0" Background="#7FE6E5E5" HorizontalAlignment="Right" CornerRadius="5" Margin="0,0,0,0" Height="80"  VerticalAlignment="Center" >
+      					<StackPanel HorizontalAlignment="Left" Width="35" Margin="2,0,0,0">
+      						<Button Style="{DynamicResource ReplyTweetButtonStyle}"  Command="local:TOBCommands.ReplyTweet" CommandParameter="{Binding}" Cursor="Hand" Width="24" HorizontalAlignment="Left" Margin="0,8,0,0" ToolTip="Reply" Visibility="Collapsed"/>
+      						<Button Style="{DynamicResource DirectMsgTweetButtonStyle}"  Command="local:TOBCommands.ReTweet"  CommandParameter="{Binding}" Cursor="Hand" Margin="7,2,3,-6" Width="24" HorizontalAlignment="Left" Height="12" ToolTip="Retweet" Visibility="Collapsed"  />
+      						<Button Style="{DynamicResource RetweetTweetButtonStyle}" Command="local:TOBCommands.DirectTweet" CommandParameter="{Binding}" Cursor="Hand" Margin="6,10,3,-3" Width="20" Height="13" HorizontalAlignment="Left" ToolTip="Direct Message"   />
+      						<Button x:Name="btnMoreActions" Margin="0,37,0,0" Style="{DynamicResource MoreActionButtonStyle}" Width="21" Height="14" Cursor="Hand" DataContext="{Binding Mode=OneWay}" />
+      					</StackPanel>
+      				</Border>
+      			</Grid>
+      		</StackPanel>
+      	</Grid>
+      </Grid>
+      <DataTemplate.Triggers>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="grid">
+          <BeginStoryboard x:Name="DirectMsgMouseLeave_BeginStoryboard" Storyboard="{StaticResource DirectMsgMouseLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="grid">
+          <BeginStoryboard x:Name="DirectMessageMouseEnter_BeginStoryboard" Storyboard="{StaticResource DirectMessageMouseEnter}"/>
+        </EventTrigger>
+        <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+          <Setter Property="Background" TargetName="borderDirectMessages" Value="#FFF3F3F3"/>
+          <Setter Property="Visibility" TargetName="btnDismissUIObj" Value="Visible" />
+          <Setter Property="IsEnabled" TargetName="btnDismissUIObj" Value="True" />
+        </Trigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SearchUsersListDataTemplate">
+      <Border CornerRadius="4" Margin="6,0,3,0" Width="300" BorderThickness="1" BorderBrush="#FFBBBCBC" Height="Auto">
+        <Border.Background>
+          <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFF0F0F0" Offset="1"/>
+            <GradientStop Color="White"/>
+            <GradientStop Color="White" Offset="0.698"/>
+            <GradientStop Color="White" Offset="0.44"/>
+            <GradientStop Color="White" Offset="0.216"/>
+          </LinearGradientBrush>
+        </Border.Background>
+        <StackPanel Width="290" Height="Auto">
+          <Grid Height="Auto">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.Column="0" Margin="5" Grid.ColumnSpan="2">
+              <TextBlock TextWrapping="Wrap" FontFamily="Tahoma" VerticalAlignment="Bottom" Visibility="Collapsed" ><TweetOBoxMain_Utility:BindableRun BoundText="{Binding Text}"  Foreground="#FF494949" FontSize="11"/></TextBlock>
+              <TweetOBoxMain_Utility:TweetsTextBlock TextWrapping="Wrap" InlineCollection="{Binding Converter={StaticResource ProfileTweetsTextConverter}}"/>
+            </WrapPanel>
+            <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" Margin="5,0,0,4" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+              <!--     <Button x:Name="btnReplayTweet" HorizontalAlignment="Left" Margin="0,4,0,0" Style="{DynamicResource btnreplayStyle}" VerticalAlignment="Bottom" Width="22" Height="21"  Click="btnReplayTweet_Click" ToolTip="Reply" DataContext="{Binding Mode=OneWay}"  IsEnabled="{Binding Converter={StaticResource TweetActionsVisibilityConverter}, Mode=OneWay}" />
+            <Button x:Name="btnDirectTweet" HorizontalAlignment="Left" Margin="3,0,0,0" Style="{DynamicResource btnDirectMsgStyle}" VerticalAlignment="Bottom" Width="22" Height="21" Content="Button" Click="btnDirectTweet_Click" ToolTip="Direct Message" DataContext="{Binding Mode=OneWay}"/> -->
+
+              <Button Style="{DynamicResource ReplyTweetButtonStyle}" Command="local:TOBCommands.ReplyTweet"  CommandParameter="{Binding}" Cursor="Hand" Width="24" Margin="0,0,0,1" ToolTip="Retweet"/>
+              <Button Style="{DynamicResource RetweetTweetButtonStyle}" Command="local:TOBCommands.ReTweet"  CommandParameter="{Binding}" Cursor="Hand" Margin="4,-3,4,0" Width="20" Height="17" ToolTip="Reply" />
+
+              <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="5,4,0,3">
+                <!--   <TextBlock Text="{Binding UserProfile.Name, Mode=Default}" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58"   /> -->
+                <TextBlock x:Name="textBlock" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" Margin="0,0,0,0" ><Hyperlink x:Name="hlinkStatus" RequestNavigate="HandleLinkClick" NavigateUri="{Binding Converter={StaticResource TwitterStatusUrl}, Mode=OneWay}" TargetName="_top" FontFamily="Tahoma" FontSize="10" TextDecorations="None" ><InlineUIContainer>
+                      <TextBlock x:Name="tbDate" Text="{Binding TwitterCreatedDate, Converter={StaticResource DateConverter}}" Foreground="#FF7a8c58" />
+                    </InlineUIContainer></Hyperlink></TextBlock>
+                <TextBlock Text=" via " FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58"/>
+                <TextBlock x:Name="tbVia" FontFamily="Tahoma" FontSize="10" Foreground="#FF043d72"><!--<Hyperlink x:Name="hlinkvia" RequestNavigate="HandleLinkClick" TargetName="_top" FontFamily="Tahoma" FontSize="10" Foreground="#FF494949" TextDecorations="None" NavigateUri="{Binding Source, Converter={StaticResource SouceUrlConverter}, Mode=OneWay}" >--><Hyperlink x:Name="hlinkvia" TargetName="_top" FontFamily="Tahoma" FontSize="10" Foreground="#FF494949" TextDecorations="None"  ><InlineUIContainer>
+                      <TextBlock Text="{Binding Source, Converter={StaticResource TweetSourceConverter}}"  Foreground="#FF043d72" />
+                    </InlineUIContainer></Hyperlink></TextBlock>
+              </StackPanel>
+
+
+
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </Border>
+      <DataTemplate.Triggers>
+        <Trigger Property="IsMouseOver" Value="True" SourceName="tbVia">
+          <Setter Property="TextDecorations" TargetName="tbVia" Value="Underline"/>
+          <Setter Property="Cursor" TargetName="tbVia" Value="Hand"/>
+        </Trigger>
+        <Trigger Property="IsMouseOver" SourceName="textBlock" Value="True">
+          <Setter Property="Cursor" TargetName="textBlock" Value="Hand"/>
+          <Setter Property="TextDecorations" TargetName="textBlock" Value="Underline"/>
+        </Trigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="FilterTextBoxControlTemplate" TargetType="{x:Type TextBox}">
+      <Border x:Name="border" BorderThickness="1" Background="#FFFFFF" BorderBrush="#FF93999B" Height="19">
+        <Grid>
+          <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          <TextBlock x:Name="textBlock" Margin="0" Opacity="1" Text="Filter tweets in the current work area" FontFamily="Tahoma" FontSize="9.333" Foreground="#FF899C9F"  TextWrapping="Wrap" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="3" FontStyle="Italic"  />
+          <Button x:Name="btnFilterSave" HorizontalAlignment="Right" Margin="5,1,20,0" Style="{DynamicResource FilterSaveButtonStyle}" Width="11" Height="11" Content="" ToolTip="Save Filter" Command="local:TOBCommands.SaveFilterCommand" CommandParameter="{Binding}" />
+          <Button x:Name="btnFilterTweets" HorizontalAlignment="Right" Margin="5,1,3,0" Style="{DynamicResource FilterTextButtonStyle}" Width="10" Height="11" Content="" ToolTip="Clear Filter" Click="btnFilterTweets_Click"/>
+        </Grid>
+      </Border>
+      <ControlTemplate.Triggers>
+        <Trigger Property="Text" Value="">
+          <Setter Property="Style" TargetName="btnFilterTweets" Value="{DynamicResource CloseFilterButtonStyle}"/>
+          <Setter Property="Visibility" Value="Collapsed" TargetName="btnFilterSave"/>
+        </Trigger>
+        <MultiTrigger>
+          <MultiTrigger.Conditions>
+            <Condition Property="IsFocused" Value="False" />
+            <Condition Property="Text"	 Value=""/>
+          </MultiTrigger.Conditions>
+          <Setter Property="Visibility" TargetName="textBlock" Value="Visible" />
+        </MultiTrigger>
+        <Trigger Property="IsFocused" Value="True"/>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="QueryUserDataTemplate">
+      <Grid x:Name="LayoutRoot" Margin="6,0,0,0">
+        <Border x:Name="bdFindPeople" CornerRadius="4" BorderThickness="1" BorderBrush="#FFBBBCBC" Background="White" Height="Auto" Width="303">
+          <StackPanel Width="300" Height="Auto">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.221*"/>
+                <RowDefinition Height="0.18*"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.221*"/>
+                <ColumnDefinition Width="0.779*"/>
+              </Grid.ColumnDefinitions>
+              <Border Margin="7,7,5,5" Width="45" Height="45" BorderBrush="#FF819497" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <!--<Border.BitmapEffect>
+                  <OuterGlowBitmapEffect GlowColor="#FFc2c2c2" GlowSize="3" Opacity="0.5" />
+                </Border.BitmapEffect>-->
+                <Image Source="{Binding ProfileImageUrl}" VerticalAlignment="Top"/>
+              </Border>
+
+              <WrapPanel Grid.Column="1" Margin="0,5,8,0">
+                <TextBlock TextWrapping="Wrap" FontFamily="Tahoma" VerticalAlignment="Bottom" ><InlineUIContainer>
+                    <Button x:Name="btnUserName" Style="{DynamicResource UserNameButtonStyle}" FontSize="11" Content="{Binding ScreenName}" DataContext="{Binding Mode=OneWay}" Cursor="Hand" />
+                  </InlineUIContainer><Run Text=" "/><Run Text=" "/><Run Text=" "/><TweetOBoxMain_Utility:BindableRun BoundText="{Binding Description}"  Foreground="#FF494949" FontSize="11.3"/></TextBlock>
+              </WrapPanel>
+              <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="7,0,0,5" Grid.ColumnSpan="2" VerticalAlignment="Top" >
+                <Grid Width="277.893" Height="20">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.731*"/>
+                    <ColumnDefinition Width="0.269*"/>
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Text="Location:" FontFamily="Tahoma" FontSize="11" HorizontalAlignment="Left" Margin="0,2,0,0" />
+                  <TextBlock Text="{Binding Location, Mode=Default}" FontFamily="Tahoma" FontSize="10" Foreground="#FF043D72" Margin="49.486,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                  <Button x:Name="button" HorizontalAlignment="Right" Margin="0,0,5,2" Style="{DynamicResource FollowButtonStyle}" Content="Follow" Grid.Column="1" Command="local:TOBCommands.FollowUser"  CommandParameter="{Binding}" Visibility="{Binding Converter={StaticResource FollowConverter}, Mode=OneWay}" VerticalAlignment="Center"/>
+                  <Image Source="/Images/Ic_follow.png" Visibility="{Binding Visibility, Converter={StaticResource FollowingConverter}, ElementName=button, Mode=Default}" HorizontalAlignment="Right" ToolTip="Following" Grid.Column="1" Width="18" Height="20" Margin="0,0,10,0"/>
+				  
+                </Grid>
+              </StackPanel>
+            </Grid>
+          </StackPanel>
+
+        </Border>
+      </Grid>
+      <DataTemplate.Triggers>
+        <Trigger Property="IsMouseOver" Value="True" SourceName="bdFindPeople">
+          <Setter Property="Background" TargetName="bdFindPeople">
+            <Setter.Value>
+              <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFe8e8e8" Offset="0"/>
+                <GradientStop Color="#FFd5d5d5" Offset="1"/>
+              </LinearGradientBrush>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="GroupsStatusesDataTemplate">
+      <DataTemplate.Resources>
+        <Storyboard x:Key="DirectMessageMouseEnter">
+          <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border1" Storyboard.TargetProperty="(FrameworkElement.Width)">
+            <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="35"/>
+          </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DirectMsgMouseLeave">
+          <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="border1" Storyboard.TargetProperty="(FrameworkElement.Width)">
+            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+          </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+      </DataTemplate.Resources>
+      <Grid x:Name="LayoutRoot" Margin="6,0,0,0">
+        <Border x:Name="border" CornerRadius="4" BorderThickness="1" BorderBrush="#FFBBBCBC" Width="300">
+          <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+              <GradientStop Color="White" Offset="0"/>
+              <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+          </Border.Background>
+          <StackPanel Width="290">
+            <Grid >
+              <Grid.RowDefinitions>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.221*"/>
+                <RowDefinition Height="0.18*"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.203*"/>
+                <ColumnDefinition Width="0.663*"/>
+                <ColumnDefinition Width="0.134*"/>
+              </Grid.ColumnDefinitions>
+              <Border Margin="5,7,0,5" Width="45" Height="45" BorderBrush="#FF819497" BorderThickness="1" HorizontalAlignment="Left">
+                <!--<Border.BitmapEffect>
+                  <OuterGlowBitmapEffect GlowColor="#FFc2c2c2" GlowSize="3" Opacity="0.5" />
+                </Border.BitmapEffect>-->
+                <Image Source="{Binding User.ProfileImageUrl}" VerticalAlignment="Top"/>
+              </Border>
+
+              <WrapPanel Grid.Column="1" Margin="0,5,8,0" Grid.ColumnSpan="2">
+                <TextBlock TextWrapping="Wrap" FontFamily="Tahoma" VerticalAlignment="Bottom" Visibility="Collapsed" ><InlineUIContainer>
+                    <Button x:Name="btnUserName" Style="{DynamicResource UserNameButtonStyle}" FontSize="11" Content="{Binding User.ScreenName}" DataContext="{Binding Mode=OneWay}" Cursor="Hand" Command="local:TOBCommands.ShowListUserProfile" CommandParameter="{Binding}"/>
+                  </InlineUIContainer><Run Text=" "/><Run Text=" "/><Run Text=" "/><TweetOBoxMain_Utility:BindableRun BoundText="{Binding Text}"  Foreground="#FF494949" FontSize="11.3"/></TextBlock>
+                <TweetOBoxMain_Utility:TweetsTextBlock TextWrapping="Wrap" InlineCollection="{Binding Converter={StaticResource TagsLinkConverter}}"/>
+              </WrapPanel>
+
+              <Button x:Name="btnDismissUIObj" ToolTip="Dismiss Message"  Visibility="Hidden" IsEnabled="False" HorizontalAlignment="Right" Grid.Column="2" Command="local:TOBCommands.DismissUIObject" CommandParameter="{Binding}" Template="{DynamicResource DeleteButtonControlTemplate}" VerticalAlignment="Top" Cursor="Hand" Content="X"/>
+
+                            <Grid  Grid.ColumnSpan="3" Grid.Row="1" Margin="5,0,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,8,0,0">
+                  <TextBlock x:Name="textBlock" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" Margin="0,0,0,0" ><Hyperlink x:Name="hlinkStatus" RequestNavigate="HandleLinkClick" NavigateUri="{Binding Converter={StaticResource TwitterStatusUrl}, Mode=OneWay}" TargetName="_top" FontFamily="Tahoma" FontSize="10" TextDecorations="None" ><InlineUIContainer>
+                        <TextBlock x:Name="tbDate" Text="{Binding Converter={StaticResource DateConverter}, Mode=OneWay}" Foreground="#FF7a8c58" />
+                      </InlineUIContainer></Hyperlink></TextBlock>
+                  <WrapPanel Width="160">
+                    <TextBlock Text=" via " FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="tbVia" FontFamily="Tahoma" FontSize="10" Foreground="#FF043d72" TextWrapping="Wrap"><Hyperlink x:Name="hlinkvia" RequestNavigate="HandleLinkClick" TargetName="_top" FontFamily="Tahoma" FontSize="10" Foreground="#FF494949" TextDecorations="None" NavigateUri="{Binding Source, Converter={StaticResource SouceUrlConverter}, Mode=OneWay}" ><InlineUIContainer>
+                          <TextBlock Text="{Binding Source, Converter={StaticResource TweetSourceConverter}}"  Foreground="#FF043d72" />
+                        </InlineUIContainer></Hyperlink></TextBlock>
+                  </WrapPanel>
+                </StackPanel>
+                <Popup x:Name="PopupTweetActions"
+                  PopupAnimation="None"
+                  AllowsTransparency = "True" Margin="0"  Grid.Column="1" HorizontalOffset="67" VerticalOffset="-8" >
+                  <Popup.IsOpen>
+                    <MultiBinding Converter="{StaticResource BoolORConverter}">
+                      <Binding Path="IsMouseOver" ElementName="btnMoreActions" Mode="OneWay"/>
+                      <Binding Path="IsMouseOver" ElementName="PopupTweetActions" Mode="OneWay"/>
+                    </MultiBinding>
+                  </Popup.IsOpen>
+                  <Border x:Name="borderPopUp"
+                    BorderThickness="1.5" CornerRadius="8" Width="Auto"  Background="White" Margin="0">
+                    <Border.BorderBrush>
+                      <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF682A11" Offset="0"/>
+                        <GradientStop Color="#FF865541" Offset="1"/>
+                      </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Grid Width="Auto" Height="Auto" Margin="5" x:Name="grdOptionsContainer" >
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.55*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                      </Grid.ColumnDefinitions>
+                      <StackPanel Width="120" Margin="5,0,0,0">
+                        <TextBlock Text="User" Margin="0,0,0,3" FontWeight="Bold" Foreground="#FF063189" FontSize="10.667" />
+                        <Button Content="UnFollow" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.UnFollowUser" CommandParameter="{Binding}" />
+                        <Button Content="Add to group" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.AddToGroupCommand" CommandParameter="{Binding}"/>
+                        <Button Content="Remove from group" Width="110" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" />
+                        <Button Content="View Profile" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.ShowUserProfile" CommandParameter="{Binding}"/>
+                        <Button Content="Block" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.BlockUser" CommandParameter="{Binding}" />
+                        <Button Content="Report Spam" Width="100" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.ReportSpamUser" CommandParameter="{Binding}"/>
+
+                      </StackPanel>
+                      <StackPanel Grid.Column="1" Width="82">
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Text="Tweet" FontWeight="Bold" Foreground="#FF063189" FontSize="10.667" />
+                          <Image Source="/Images/Ic_mrover.png" Width="14" Margin="36,-5,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="btnReply" Content="Reply" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.ReplyTweet" CommandParameter="{Binding}" Cursor="Hand" />
+                        <Button x:Name="btnReTweet" Content="Re-Tweet" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667"  Command="local:TOBCommands.ReTweet"  CommandParameter="{Binding}" Cursor="Hand" />
+                        <Button x:Name="btnDirectMessage" Content="Direct Message" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.DirectTweet" CommandParameter="{Binding}" Cursor="Hand" />
+                        <Button Content="Mark Favourite" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}" FontSize="10.667" Command="local:TOBCommands.MarkAsFavourite" CommandParameter="{Binding}" Cursor="Hand"/>
+                        <Button x:Name="btnTweetDelete" Content="Delete" Width="80" HorizontalAlignment="Left" Template="{DynamicResource MoreLinksTemplate}"  FontSize="10.667" Command="local:TOBCommands.DeleteTweets" CommandParameter="{Binding}" Cursor="Hand"/>
+                      </StackPanel>
+                    </Grid>
+
+                  </Border>
+                </Popup>
+
+
+              </Grid>
+
+
+
+              <!--    <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="5,0,0,2" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+                <TextBlock Text="Recieved on" FontFamily="Tahoma" FontSize="10" Foreground="#FF7A8C58" Margin="0" />
+                <TextBlock Text="{Binding Account.Username, Mode=Default}" FontFamily="Tahoma" FontSize="10" Foreground="#FF043D72" Margin="5,0,0,0" VerticalAlignment="Center" />
+              </StackPanel> -->
+
+              <Border x:Name="border1" Grid.Column="2" Grid.RowSpan="3" Width="0" Background="White" HorizontalAlignment="Right" CornerRadius="5,0,0,5" Margin="0,3,0,0" Height="80"  VerticalAlignment="Center" BorderBrush="#FFC6C6C6" >
+
+                <Grid Margin="0" Width="35" >
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                  </Grid.RowDefinitions>
+
+
+                  <Border HorizontalAlignment="Left" Width="35" BorderThickness="1,1,0,0" BorderBrush="#FFC6C6C6" CornerRadius="5,0,0,0">
+                    <Button Style="{DynamicResource ReplyTweetButtonStyle}" Command="local:TOBCommands.ReplyTweet" CommandParameter="{Binding}" Cursor="Hand" ToolTip="Reply"/>
+                  </Border>
+                  <Border HorizontalAlignment="Left" Width="35" Grid.Row="1" BorderThickness="1,1,0,0" BorderBrush="#FFC6C6C6">
+                    <Button Style="{DynamicResource DirectMsgTweetButtonStyle}"  Command="local:TOBCommands.ReTweet"  CommandParameter="{Binding}" Cursor="Hand" ToolTip="Retweet"  />
+                  </Border>
+                  <Border HorizontalAlignment="Left" Margin="0" Width="35" Grid.Row="2" BorderThickness="1,1,0,1" BorderBrush="#FFC6C6C6">
+                    <Button Style="{DynamicResource RetweetTweetButtonStyle}" Command="local:TOBCommands.DirectTweet" CommandParameter="{Binding}" Cursor="Hand" ToolTip="Direct Message" />
+                  </Border>
+                  <Border Width="35" Grid.Row="3" BorderThickness="1,0,0,1" BorderBrush="#FFC6C6C6" CornerRadius="0,0,0,5">
+                    <Button x:Name="btnMoreActions" Style="{DynamicResource MoreActionButtonStyle}" Cursor="Hand" DataContext="{Binding Mode=OneWay}" />
+                  </Border>
+                </Grid>
+
+
+              </Border>
+
+            </Grid>
+          </StackPanel>
+
+        </Border>
+      </Grid>
+      <DataTemplate.Triggers>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border">
+          <BeginStoryboard x:Name="DirectMsgMouseLeave_BeginStoryboard" Storyboard="{StaticResource DirectMsgMouseLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border">
+          <BeginStoryboard x:Name="DirectMessageMouseEnter_BeginStoryboard" Storyboard="{StaticResource DirectMessageMouseEnter}"/>
+        </EventTrigger>
+        <Trigger Property="IsMouseOver" Value="True" SourceName="LayoutRoot">
+          <Setter Property="Background" TargetName="border" Value="#FFF3F3F3"/>
+          <Setter Property="Visibility" TargetName="btnDismissUIObj" Value="Visible" />
+          <Setter Property="IsEnabled" TargetName="btnDismissUIObj" Value="True" />
+        </Trigger>
+          
+      </DataTemplate.Triggers>
+    </DataTemplate>
+
+  </UserControl.Resources>
+
+  <Grid>
+        
+            
+        <Image Grid.Row="0" Source="/Images/bg_tweetTop.png" VerticalAlignment="Top"/>
+    
+    <Border Grid.Row="1"  BorderThickness="0"   Margin="0,8,0,3">
+      <Border.Background>
+        <ImageBrush ImageSource="/Images/bg_Tweets.png" ></ImageBrush>
+      </Border.Background>
+      <DockPanel VerticalAlignment="Top">
+        <StackPanel DockPanel.Dock="Top" Margin="7,0,5,3" Orientation="Horizontal">
+          <TextBox x:Name="txtFilter" Width="260" HorizontalAlignment="Left" Template="{StaticResource FilterTextBoxControlTemplate}" TextChanged="txtFilter_TextChanged" Margin="0,1,0,0" Height="19" BorderThickness="0" BorderBrush="{x:Null}"   />
+          <Path Fill="White" Stretch="Fill" Stroke="Black" Width="0.5" Height="20" Data="M309,0 L309,23" Margin="8,0,0,0"/>
+          <Button x:Name="btnMarkAsRead" Margin="7,0,0,0" Style="{DynamicResource MarkAsReadButtonStyle}" Width="18" Height="17" Click="btnMarkAsRead_Click"/>
+
+          <Image Source="/TweetOBoxMain;Component/Images/refresh.png" Width="14" Height="14" Margin="3,0,0,0" ToolTip="Refresh" Cursor="Hand" />
+          <!--   <Image Source="/TweetOBoxMain;Component/Images/Ic_playback.png" Width="18" Height="17" Margin="3,0,0,0" ToolTip="Play" Cursor="Hand" /> -->
+
+        </StackPanel>
+        <Border Padding="0,0,0,6" Margin="0,4,0,0">
+          <ListBox x:Name="listTweets" ItemsSource="{Binding}"  Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}" DockPanel.Dock="Top"
+           ItemContainerStyle="{DynamicResource SimpleListBoxItem}" Margin="0,0,3,0" ItemTemplateSelector="{StaticResource TweetsTemplateSelector}" 
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+          </ListBox>
+
+        </Border>
+      </DockPanel>
+    </Border>
+	
+    <Image Grid.Row="2" Source="/Images/bg_tweetBtm.png" VerticalAlignment="Bottom"/>
+
+  </Grid>
+</UserControl>
