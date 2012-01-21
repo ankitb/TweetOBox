@@ -1,0 +1,9 @@
+TweetOBox 
+Twitter client designed in WPF for Windows. 
+
+Building and Running
+Open the following solutions files in Visual Studio
+For Client - /Client/TweetOBox/TweetOBox.sln 
+For Server - /Server/TOBKPIService/TOBKPIService.sln
+
+For questions, contact tweetobox [at] benefluxventures dot com
